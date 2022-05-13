@@ -1,0 +1,22 @@
+{
+  "name": "@naxt/demo",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "yarn dlx nodemon -e \"*\" -w .. -i build -x \"yarn runtime:executable\" build",
+    "runtime:executable": "cross-env NODE_ENV=development RUNTIME_EXECUTABLE=1 yarn node -r ts-node/register -r @naxt/cli -e \"cli(process.argv.slice(1));\""
+  },
+  "devDependencies": {
+    "@naxt/cli": "workspace:^",
+    "@types/node": "^17.0.31",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "packageManager": "yarn@3.2.0",
+  "reposiory": {
+    "type": "git",
+    "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
+    "directory": "packages/demo"
+  }
+}
