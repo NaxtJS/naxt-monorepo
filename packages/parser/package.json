@@ -1,0 +1,16 @@
+{
+  "name": "@naxt/parser",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "packageManager": "yarn@3.2.0",
+  "reposiory": {
+    "type": "git",
+    "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
+    "directory": "packages/parser"
+  },
+  "dependencies": {
+    "rollup": "^2.72.1"
+  }
+}
