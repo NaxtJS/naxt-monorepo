@@ -1,0 +1,5 @@
+{
+  "ignore": ["packages"],
+  "exec": "yarn add-package runtime parser generator demo@no-src core cli@bin.naxt script.demo.serve=\"yarn node -r ts-node/register -r cli\"",
+  "ext": "*"
+}
