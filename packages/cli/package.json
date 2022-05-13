@@ -1,0 +1,23 @@
+{
+  "name": "@naxt/cli",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/cli.ts",
+  "types": "src/cli.ts",
+  "bin": "bin/naxt.js",
+  "dependencies": {
+    "@naxt/runtime": "workspace:^",
+    "inquirer": "^8.2.4",
+    "yargs": "^17.4.1"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^8.2.1",
+    "@types/yargs": "^17.0.10"
+  },
+  "packageManager": "yarn@3.2.0",
+  "reposiory": {
+    "type": "git",
+    "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
+    "directory": "packages/cli"
+  }
+}
