@@ -21,6 +21,7 @@
   ],
   "scripts": {
     "changelog": "",
+    "depcheck": "yarn workspaces foreach -Av dlx depcheck --json | yarn node scripts/fix",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
