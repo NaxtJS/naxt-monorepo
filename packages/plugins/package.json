@@ -9,5 +9,10 @@
     "type": "git",
     "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
     "directory": "packages/plugins"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
   }
 }
