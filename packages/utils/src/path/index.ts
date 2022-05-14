@@ -63,6 +63,14 @@ export class Path<Q extends Query> {
     return this.fullPath;
   }
 
+  get isFile() {
+    return statSync(this.fullPath).isFile();
+  }
+
+  get isDirectory() {
+    return statSync(this.fullPath).isDirectory();
+  }
+
   get dirname() {
     return this;
   }
