@@ -9,5 +9,8 @@
     "type": "git",
     "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
     "directory": "packages/generator"
+  },
+  "dependencies": {
+    "rollup": "^2.73.0"
   }
 }
