@@ -94,4 +94,9 @@ export class Path<Q extends Query> {
   duplicateTo(path = "") {
     return Path.from(path ? path : this.path, path ? this : this.root);
   }
+
+  setQueryParam<K extends keyof Q>(key: K, value: Q[K]) {
+    this.query[key] = value;
+    return this;
+  }
 }
