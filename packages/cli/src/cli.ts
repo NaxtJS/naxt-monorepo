@@ -1,10 +1,10 @@
-import { naxt } from "@naxt/runtime";
-
 const isDev = process.env.NODE_ENV === "development";
 const isRuntimeExecutable = ["true", "1"].includes(process.env.RUNTIME_EXECUTABLE);
 
 import yargs from "yargs";
 import {} from "inquirer";
+
+import { naxt } from "@naxt/runtime";
 
 export const cli = (args: string[] = [], cwd = process.cwd()) => {
   return yargs(args, cwd)
