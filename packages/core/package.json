@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "type-fest": "^2.12.2"
+  },
+  "peerDependencies": {
+    "express": "*"
   }
 }
