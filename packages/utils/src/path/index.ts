@@ -72,7 +72,7 @@ export class Path<Q extends Query> {
   }
 
   get dirname() {
-    return this;
+    return Path.from(dirname(this.fullPath));
   }
 
   get extension() {
