@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "fs";
+import { readdirSync, readFileSync, mkdirSync, writeFileSync } from "fs";
 
 import { Query } from "@naxt/types";
 import { Path } from ".";
