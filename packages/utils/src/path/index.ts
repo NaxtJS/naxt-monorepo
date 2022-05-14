@@ -14,8 +14,13 @@ export class Path<Q extends Query> {
     root = (root instanceof Path ? root.fullPath : root) || "";
 
     if (isAbsolute(path)) {
-      this._path = basename(path);
-      this._root = dirname(path);
+      if (path.startsWith(root)) {
+        this._path = path.replace(new RegExp(`^${root}`, "g"), "");
+        this._root = root;
+      } else {
+        this._path = basename(path);
+        this._root = dirname(path);
+      }
     } else {
       this._path = path;
       this._root = root;
