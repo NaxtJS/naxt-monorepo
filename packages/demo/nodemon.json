@@ -1,0 +1,6 @@
+{
+  "ignore": ["build"],
+  "ext": "*",
+  "watch": [".."],
+  "exec": "yarn runtime:executable"
+}

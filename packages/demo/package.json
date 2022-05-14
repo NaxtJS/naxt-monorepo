@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "dev": "yarn dlx nodemon -e \"*\" -w .. -i build -x \"yarn runtime:executable\" build",
+    "dev": "yarn dlx nodemon build",
     "runtime:executable": "cross-env NODE_ENV=development RUNTIME_EXECUTABLE=1 yarn node -r ts-node/register -r @naxt/cli -e \"cli(process.argv.slice(1));\""
   },
   "devDependencies": {
