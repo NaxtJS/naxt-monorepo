@@ -1,3 +1,5 @@
+import { extname } from "path";
+
 import { Query } from "@naxt/types";
 import { Path } from ".";
 
