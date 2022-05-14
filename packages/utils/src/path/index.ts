@@ -8,8 +8,6 @@ import { Extension } from "./extension";
 import { Source } from "./source";
 
 export class Path<Q extends Query> {
-  private _root: string;
-  private _path: string;
   private readonly _query: Q;
 
   constructor(path: string, root: Path<Q> | string = config.getConfig("appRoot"), query = {} as Q) {
@@ -26,9 +24,13 @@ export class Path<Q extends Query> {
     this._query = query;
   }
 
+  private _root: string;
+
   get root() {
     return this._root;
   }
+
+  private _path: string;
 
   get path() {
     return this._path;
