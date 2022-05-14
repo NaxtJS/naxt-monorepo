@@ -2,7 +2,7 @@ import { Query } from "@naxt/types";
 import { Path } from ".";
 
 export class Extension {
-  constructor(path: Path<Query>) {}
+  constructor(private path: Path<Query>) {}
 
   static from(path: Path<Query>) {
     return new Extension(path);
