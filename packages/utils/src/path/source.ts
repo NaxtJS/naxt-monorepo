@@ -24,6 +24,15 @@ export class Source<Q extends Query> {
     return readdirSync(path);
   }
 
+  mkdir(path = this.path.fullPath) {
+    mkdirSync(path, { recursive: true });
+  }
+
+  saveFile(source: string) {
+    this.mkdir(this.path.dirname.fullPath);
+    writeFileSync(this.path.fullPath, source);
+  }
+
   readAsJSON<T extends Record<string, any>>(): T {
     const content = this.read();
     return JSON.parse(content) as T;
