@@ -1,6 +1,4 @@
-import { NaxtConfig } from "@naxt/types";
-import { config, resolveConfig } from "@naxt/runtime";
-import { Path } from "@naxt/utils";
+import { config, getPages, NaxtConfig, parse, generate, Path, resolveConfig } from "@naxt/runtime";
 
 export class Naxt {
   constructor(private naxtConfig: NaxtConfig) {
@@ -15,8 +13,9 @@ export class Naxt {
 
   async build() {
     config.setConfig("appConfig", await resolveConfig());
-
-    console.log(config.getConfig("appConfig"));
+    const pages = getPages({ path: true, absolute: true });
+    const { bundle, outputOptions } = await parse(pages);
+    await generate(bundle, outputOptions);
   }
 
   async serve() {
