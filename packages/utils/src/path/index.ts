@@ -7,10 +7,10 @@ import { Query } from "@naxt/types";
 import { Extension } from "./extension";
 import { Source } from "./source";
 
-export class Path<Q extends Query> {
-  private readonly _query: Q;
+export class Path<Q extends Query = Query> {
+  private readonly _query = {} as Q;
 
-  constructor(path: string, root: Path<Q> | string = config.getConfig("appRoot"), query = {} as Q) {
+  constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
     root = (root instanceof Path ? root.fullPath : root) || "";
 
     if (isAbsolute(path)) {
@@ -87,7 +87,10 @@ export class Path<Q extends Query> {
     return existsSync(this.fullPath);
   }
 
-  static from<Q extends Query>(path: string, root: Path<Q> | string = config.getConfig("appRoot")) {
+  static from<Q extends Query = Query>(
+    path: string,
+    root: Path | string = config.getConfig("appRoot")
+  ) {
     return new Path<Q>(path, root);
   }
 
