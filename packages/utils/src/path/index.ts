@@ -124,4 +124,18 @@ export class Path<Q extends Query = Query> {
     value !== undefined && (this.query[key] = encodeURIComponent(value) as Q[K]);
     return this;
   }
+
+  getQueryParam<K extends keyof Q>(key: K): Q[K] {
+    const value = this.query[key]
+      ? (decodeURIComponent(this.query[key].toString()) as Q[K])
+      : undefined;
+
+    return !value
+      ? value
+      : (["true", "false"] as Q[K][]).includes(value)
+      ? ((value === "true") as Q[K])
+      : value.toString().match(/^\d+$/)
+      ? (parseInt(String(value)) as Q[K])
+      : value;
+  }
 }
