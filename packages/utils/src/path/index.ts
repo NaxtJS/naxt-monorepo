@@ -79,7 +79,10 @@ export class Path<Q extends Query = Query> {
   }
 
   get pathWithQuery() {
-    return this.fullPath;
+    const queryString = Object.entries(this.query)
+      .map(items => items.join("="))
+      .join("&");
+    return this.fullPath + (queryString ? `?${queryString}` : queryString);
   }
 
   get isFile() {
