@@ -62,6 +62,10 @@ export class Path<Q extends Query = Query> {
     }
   }
 
+  get basename() {
+    return basename(this._path).replace(this.extension.toString(), "").slice(0, -1);
+  }
+
   get query(): Q {
     return this._query;
   }
