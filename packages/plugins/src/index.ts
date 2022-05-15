@@ -11,7 +11,9 @@ import commonjs from "@rollup/plugin-commonjs";
 export const resolvePlugins = (): Plugin[] => {
   const rootTsConfigFile = config.getConfig("appRoot").duplicateTo("tsconfig.json");
   const tsConfig = rootTsConfigFile.exists ? rootTsConfigFile.source.readAsJSON() : {};
-  tsConfig.module = "esnext";
+  tsConfig.compilerOptions ||= {};
+  tsConfig.compilerOptions.module = "ESNext";
+  tsConfig.compilerOptions.target = "ESNext";
 
   return [typescript({ ...tsConfig })];
 };
