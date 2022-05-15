@@ -11,6 +11,10 @@
     "directory": "packages/generator"
   },
   "dependencies": {
+    "rimraf": "^3.0.2",
     "rollup": "^2.73.0"
+  },
+  "devDependencies": {
+    "@types/rimraf": "^3.0.2"
   }
 }
