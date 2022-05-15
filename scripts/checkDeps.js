@@ -15,6 +15,7 @@ const glob = require("glob");
 const EventEmitter = require("events");
 
 const { workspaces } = require("../package.json");
+const { writeFileSync } = require("fs");
 
 const packages = [".", ...workspaces]
   .map(workspace => glob.sync(workspace, { absolute: true }))
@@ -25,11 +26,7 @@ const packages = [".", ...workspaces]
     return { root: pkgJsonFile, pkg: pkgJson };
   });
 
-//packages
-
-const stdin = new EventEmitter();
-let buff = "";
-
+const missingPackages = {};
 process.stdin
   .on(
     "data",
@@ -42,18 +39,13 @@ process.stdin
       try {
         const [, repo, matchedData] = cleanData?.match(/^\[([\s\S]+?)]:\s*([\s\S]+?)$/);
         /** @type {DepCheck} */
-        const json = JSON.parse(matchedData);
-        const pkg = packages.find(pkg => pkg.pkg.name === repo);
-        if (pkg) {
-          /**
-           * ToDo: Write fix script
-           *
-           * @param json.missing Missing Dependencies
-           * @param pkg.pkg Package.json
-           * @param pkg.root Package.json root file
-           */
-        }
-      } catch {
+        const { missing } = JSON.parse(matchedData);
+        const dependencies = Object.keys(missing);
+        const pkgName = repo.slice(repo.startsWith("@") ? 1 : 0).replace(/\W+/g, "-");
+        const missingDepFile = resolve(process.cwd(), "missingRepos", `${pkgName}.json`);
+        writeFileSync(missingDepFile, JSON.stringify({ dependencies }, null, 2));
+        console.log(`Wrote missing dependencies to file: ${missingDepFile}`);
+      } catch (e) {
         console.log(cleanData);
       }
     }
