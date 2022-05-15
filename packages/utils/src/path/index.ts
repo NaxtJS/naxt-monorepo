@@ -74,6 +74,10 @@ export class Path<Q extends Query = Query> {
     return resolve(this._root, this._path);
   }
 
+  get importPath() {
+    return this.fullPath.split(sep).join("/");
+  }
+
   get pathWithQuery() {
     return this.fullPath;
   }
