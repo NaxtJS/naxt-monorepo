@@ -15,5 +15,5 @@ export const resolvePlugins = (): Plugin[] => {
   tsConfig.compilerOptions.module = "ESNext";
   tsConfig.compilerOptions.target = "ESNext";
 
-  return [typescript({ ...tsConfig })];
+  return [worker(), typescript({ ...tsConfig }), commonjs(), worker.post()];
 };
