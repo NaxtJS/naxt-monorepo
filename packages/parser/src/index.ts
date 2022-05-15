@@ -3,11 +3,8 @@ import { NULL_CHAR, Path, resolvePlugins } from "@naxt/runtime";
 
 export const parse = async (pages: Path<any>[]) => {
   const rollupOptions: RollupOptions = {
-    input: pages.map(page => page.setQueryParam("entrypoint", true).fullPath),
-    output: {
-      format: "esm",
-      generatedCode: "es5"
-    },
+    input: pages.map(page => page.fullPath),
+    output: { format: "module" },
     plugins: resolvePlugins()
   };
 
