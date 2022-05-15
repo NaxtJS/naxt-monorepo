@@ -1,7 +1,5 @@
 import { rollup, RollupOptions } from "rollup";
-import { Path } from "@naxt/utils";
-
-import { resolvePlugins } from "@naxt/plugins";
+import { NULL_CHAR, Path, resolvePlugins } from "@naxt/runtime";
 
 export const parse = async (pages: Path<any>[]) => {
   const rollupOptions: RollupOptions = {

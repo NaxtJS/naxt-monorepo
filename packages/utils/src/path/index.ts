@@ -1,4 +1,4 @@
-import { basename, dirname, isAbsolute, resolve } from "path";
+import { basename, dirname, isAbsolute, resolve, sep } from "path";
 import { existsSync, statSync } from "fs";
 
 import { config } from "@naxt/runtime";

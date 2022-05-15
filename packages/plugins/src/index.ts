@@ -1,9 +1,12 @@
 import { Plugin } from "rollup";
 import { config } from "@naxt/runtime";
-import {} from "typescript";
 
-// plugins
+// Internal Plugins
+import { worker } from "./workerPlugin";
+
+// External plugins
 import typescript from "@rollup/plugin-typescript";
+import commonjs from "@rollup/plugin-commonjs";
 
 export const resolvePlugins = (): Plugin[] => {
   const rootTsConfigFile = config.getConfig("appRoot").duplicateTo("tsconfig.json");
