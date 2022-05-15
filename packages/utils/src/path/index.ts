@@ -12,6 +12,8 @@ export class Path<Q extends Query = Query> {
 
   constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
     root = (root instanceof Path ? root.fullPath : root) || "";
+    let queryString: string;
+    [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
 
     if (isAbsolute(path)) {
       if (path.startsWith(root)) {
@@ -26,7 +28,16 @@ export class Path<Q extends Query = Query> {
       this._root = root;
     }
 
-    this._query = query;
+    if (queryString) {
+      const qs = queryString.split("&").reduce((acc, a) => {
+        Object.assign(acc, { [a.split("=")[0]]: a.split("=")[1] ?? true });
+        return acc;
+      }, {} as Q);
+
+      Object.assign(query, qs);
+    }
+
+    Object.entries(query).forEach(([qk, qv]: [any, any]) => this.setQueryParam(qk, qv));
   }
 
   private _root: string;
