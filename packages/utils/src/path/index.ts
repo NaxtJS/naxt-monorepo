@@ -25,6 +25,7 @@ export class Path<Q extends Query = Query> {
       this._root = root;
     }
 
+    Object.entries(query).forEach(([qk, qv]: [any, any]) => this.setQueryParam(qk, qv));
     if (queryString) {
       const qs = queryString.split("&").reduce((acc, a) => {
         Object.assign(acc, { [a.split("=")[0]]: a.split("=")[1] ?? true });
@@ -33,8 +34,6 @@ export class Path<Q extends Query = Query> {
 
       Object.assign(query, qs);
     }
-
-    Object.entries(query).forEach(([qk, qv]: [any, any]) => this.setQueryParam(qk, qv));
   }
 
   private _root: string;
