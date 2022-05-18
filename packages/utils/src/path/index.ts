@@ -11,6 +11,8 @@ export class Path<Q extends Query = Query> {
   private readonly _query = {} as Q;
 
   constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
+    if (!path) return;
+
     root = (root instanceof Path ? root.fullPath : root) || "";
     let queryString: string;
     [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
