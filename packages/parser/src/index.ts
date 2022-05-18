@@ -3,7 +3,7 @@ import { NULL_CHAR, Path, resolvePlugins } from "@naxt/runtime";
 
 export const parse = async (pages: Path<any>[]) => {
   const rollupOptions: RollupOptions = {
-    input: pages.map(page => page.fullPath),
+    input: pages.map(page => page.setQueryParam("entrypoint", true).pathWithQuery),
     output: { format: "module" },
     plugins: resolvePlugins()
   };
