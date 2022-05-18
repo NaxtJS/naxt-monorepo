@@ -103,6 +103,10 @@ export class Path<Q extends Query = Query> {
     return existsSync(this.fullPath);
   }
 
+  get normalized() {
+    return this.fullPath.replace(/[\\\/]/g, sep);
+  }
+
   static from<Q extends Query = Query>(
     path: string,
     root: Path | string = config.getConfig("appRoot")
