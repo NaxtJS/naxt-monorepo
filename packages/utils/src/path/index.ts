@@ -119,14 +119,14 @@ export class Path<Q extends Query = Query> {
   }
 
   setQueryParam<K extends keyof Q>(key: K, value: Q[K]) {
-    value !== undefined && (this.query[key] = encodeURIComponent(value) as Q[K]);
+    if (value !== undefined) {
+      this.query[key] = value;
+    }
     return this;
   }
 
   getQueryParam<K extends keyof Q>(key: K): Q[K] {
-    const value = this.query[key]
-      ? (decodeURIComponent(this.query[key].toString()) as Q[K])
-      : undefined;
+    const value = this.query[key];
 
     return !value
       ? value
