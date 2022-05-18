@@ -3,6 +3,7 @@ import { Parser } from "acorn";
 import { simple } from "acorn-walk";
 import MagicString from "magic-string";
 import { Path } from "@naxt/utils";
+import { ResolveQuery } from "@naxt/types";
 
 export const worker = (): Plugin => ({
   name: "naxt:worker-plugin",
