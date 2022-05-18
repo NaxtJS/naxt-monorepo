@@ -18,13 +18,8 @@ export class Path<Q extends Query = Query> {
     [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
 
     if (isAbsolute(path)) {
-      if (path.startsWith(root)) {
-        this._path = path.replace(new RegExp(`^${root}`, "g"), "");
-        this._root = root;
-      } else {
-        this._path = basename(path);
-        this._root = dirname(path);
-      }
+      this._path = basename(path).replace(new RegExp(`^${root}`, "g"), "");
+      this._root = dirname(path);
     } else {
       this._path = path;
       this._root = root;
