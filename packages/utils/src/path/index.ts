@@ -8,30 +8,10 @@ import { Extension } from "./extension";
 import { Source } from "./source";
 
 export class Path<Q extends Query = Query> {
-  private readonly _query = {} as Q;
+  private _query = {} as Q;
 
   constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
-    if (!path) return;
-
-    root = (root instanceof Path ? root.fullPath : root) || "";
-    let queryString: string;
-    [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
-
-    if (isAbsolute(path)) {
-      this._path = basename(path).replace(new RegExp(`^${root}`, "g"), "");
-      this._root = dirname(path);
-    } else {
-      this._path = path;
-      this._root = root;
-    }
-
-    Object.entries(query).forEach(([qk, qv]: [any, any]) => this.setQueryParam(qk, qv));
-    if (queryString) {
-      queryString.split("&").forEach(a => {
-        const [key, ...values] = a.split("=");
-        this.setQueryParam(key as keyof Q, values.join("=") as Q[typeof key]);
-      });
-    }
+    this.define(path, root, query);
   }
 
   private _root: string;
@@ -135,5 +115,34 @@ export class Path<Q extends Query = Query> {
       : value.toString().match(/^\d+$/)
       ? (parseInt(String(value)) as Q[K])
       : value;
+  }
+
+  private parse(path: string, root: Path | string, query: Q) {
+    if (!path) return;
+
+    root = (root instanceof Path ? root.fullPath : root) || "";
+    let queryString: string;
+    [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
+    const fullPath = resolve(root, path);
+    [root, path] = [dirname(fullPath), basename(fullPath)];
+
+    const oldQuery = Object.assign({}, this.query);
+    this._query = {} as Q;
+    Object.entries(query).forEach(([qk, qv]: [any, any]) => this.setQueryParam(qk, qv));
+    if (queryString) {
+      queryString.split("&").forEach(a => {
+        const [key, ...values] = a.split("=");
+        this.setQueryParam(key as keyof Q, values.join("=") as Q[typeof key]);
+      });
+    }
+    query = Object.assign({}, this.query);
+    this._query = oldQuery;
+
+    return { root, path, query };
+  }
+
+  private define(path: string, root: Path | string, query: Q) {
+    const { root: _root, path: _path, query: _query } = this.parse(path, root, query);
+    [this._root, this._path, this._query] = [_root, _path, _query];
   }
 }
