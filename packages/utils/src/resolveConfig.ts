@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import { config, defaultAppConfig } from "@naxt/runtime";
 import { AppConfig } from "@naxt/types";
-
 import { Path } from "./path";
 
 export const resolveConfig = async (): Promise<AppConfig> => {
