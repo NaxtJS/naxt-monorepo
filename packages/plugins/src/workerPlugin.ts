@@ -48,7 +48,7 @@ export const worker = (): Plugin => {
       const path = sources.get(source);
       const importer = importers.get(source);
 
-      if (path.getQueryParam("entrypoint")) {
+      if (path?.getQueryParam("entrypoint")) {
       }
 
       if (importer?.getQueryParam("entrypoint")) {
