@@ -10,12 +10,12 @@ export class Extension {
     return new Extension(path);
   }
 
-  isSame(extension: string): boolean {
-    return false;
+  isSameTo(extension: string): boolean {
+    return extname(this.path.fullPath) && this.path.fullPath.endsWith(extension);
   }
 
   isSameToOneOf(extensions: string[]): boolean {
-    return false;
+    return extensions.some(extension => this.isSameTo(extension));
   }
 
   setExt(extension: string) {
