@@ -93,6 +93,11 @@ export class Path<Q extends Query = Query> {
     return Path.from(path ? path : this.path, path ? this : this.root);
   }
 
+  relativeTo(path: string) {
+    const { path: _path, root, query } = this.parse(path, this.dirname, this.query);
+    return Path.from(_path, root, query);
+  }
+
   setQueryParam<K extends keyof Q>(key: K, value: Q[K]) {
     if (value !== undefined) {
       this.query[key] = value;
