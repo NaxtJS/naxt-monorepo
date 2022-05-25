@@ -83,9 +83,10 @@ export class Path<Q extends Query = Query> {
 
   static from<Q extends Query = Query>(
     path: string,
-    root: Path | string = config.getConfig("appRoot")
+    root: Path | string = config.getConfig("appRoot"),
+    query = {} as Q
   ) {
-    return new Path<Q>(path, root);
+    return new Path(path, root, query);
   }
 
   duplicateTo(path = "") {
