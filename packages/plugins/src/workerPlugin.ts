@@ -15,12 +15,17 @@ export const worker = (): Plugin => {
     resolveId(source, importer) {
       const path = Path.from<ResolveQuery>(source);
       const isEntrypoint = path.getQueryParam("entrypoint");
+      const importerPath = importer && Path.from<ResolveQuery>(importer);
 
-      importers.set(source, importer && Path.from(importer));
+      importers.set(source, importerPath);
       sources.set(source, path);
 
       if (isEntrypoint || importer.startsWith(path.normalized)) {
         return source;
+      }
+
+      if (source.startsWith(".")) {
+        return importerPath.relativeTo(source).source.findFile().fullPath;
       }
     },
 
