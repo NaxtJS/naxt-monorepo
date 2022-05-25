@@ -27,13 +27,7 @@ export class Path<Q extends Query = Query> {
   }
 
   set path(path: string) {
-    if (isAbsolute(path)) {
-      this._path = basename(path);
-      this._root = dirname(path);
-    } else {
-      this._path = basename(path);
-      this._root = resolve(this.root, dirname(path));
-    }
+    this.define(path, this.root, this.query);
   }
 
   get basename() {
