@@ -8,3 +8,4 @@ export const resolvePlugins = (): Plugin[] => {
 
 export const ENTRYPOINT_BASENAME = "naxt:entry";
 export const NULL_CHAR = String.fromCharCode(0x00);
+export { worker } from "./workerPlugin";
