@@ -13,19 +13,12 @@ export const worker = (): Plugin => {
     name: "naxt:worker-plugin",
 
     resolveId(source, importer) {
-      const path = Path.from<ResolveQuery>(source);
-      const isEntrypoint = path.getQueryParam("entrypoint");
-      const importerPath = importer && Path.from<ResolveQuery>(importer);
-
-      importers.set(source, importerPath);
-      sources.set(source, path);
-
-      if (isEntrypoint || importer.startsWith(path.normalized)) {
+      if (source.startsWith(entryPointBaseName)) {
         return source;
       }
 
       if (source.startsWith(".")) {
-        return importerPath.relativeTo(source).source.findFile().fullPath;
+        return Path.from(importer).relativeTo(source).source.findFile().importPath;
       }
     },
 
