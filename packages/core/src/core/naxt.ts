@@ -3,6 +3,7 @@ import { config, getPages, NaxtConfig, parse, generate, Path, resolveConfig } fr
 export class Naxt {
   constructor(private naxtConfig: NaxtConfig) {
     config.setConfig("appRoot", Path.from(process.cwd()));
+    config.setConfig("license", new StringBuilder());
 
     try {
       config.setConfig("nodeModules", Path.from(require.resolve("express")).dirname.dirname);
@@ -13,6 +14,7 @@ export class Naxt {
 
   async build() {
     config.setConfig("appConfig", await resolveConfig());
+    config.setConfig("isBuild", true);
     const pages = getPages({ path: true, absolute: true });
     const { bundle, outputOptions } = await parse(pages);
     await generate(bundle, outputOptions);
