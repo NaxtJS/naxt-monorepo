@@ -1,3 +1,5 @@
+import { Plugin } from "@naxt/runtime";
+
 export type ScriptTypes =
   | "application/javascript"
   | "application/ecmascript"
@@ -39,7 +41,7 @@ export interface CacheOptions {
 
 export interface AppConfig {
   head: Head;
-  // plugins: Plugin[];
+  plugins: Plugin[];
   build: BuildOptions;
   cache: CacheOptions;
   aliases: Record<string, string>;
