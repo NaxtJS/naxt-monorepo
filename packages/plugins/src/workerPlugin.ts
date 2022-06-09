@@ -23,17 +23,15 @@ export const worker = (): Plugin => {
     },
 
     load(source) {
-      const path = sources.get(source);
-      const importer = importers.get(source);
-      const isEntrypoint = path.getQueryParam("entrypoint");
-      const basename = path.basename[0].toUpperCase() + path.basename.slice(1);
+      const sourcePath = Path.from<{ page: string }>(source);
 
-      if (isEntrypoint) {
-        return `import { ${basename} } from "${path.importPath}"; ${basename}();`;
-      }
-
-      if (importer?.getQueryParam("entrypoint")) {
-        return importer.source.read();
+      if (source.startsWith(entryPointBaseName)) {
+        const sourcePagePath = Path.from(sourcePath.query.page);
+        const basename = sourcePagePath.basename;
+        const componentName = basename[0].toUpperCase() + basename.slice(1);
+        entrypoints.add(sourcePagePath.importPath);
+        entrypoints.add(sourcePagePath.fullPath);
+        return `import { ${componentName} } from "${sourcePagePath.importPath}";\n\n${componentName}();`;
       }
     },
 
