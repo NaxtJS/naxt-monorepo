@@ -96,3 +96,6 @@ worker.post = (): Plugin => {
     }
   };
 };
+
+worker.transformToInputFile = (file: string | Path) =>
+  `${NULL_CHAR}${ENTRYPOINT_BASENAME}?page=${file instanceof Path ? file.fullPath : file}`;
