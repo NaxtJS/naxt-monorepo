@@ -79,6 +79,20 @@ export const worker = (): Plugin => {
   };
 };
 
-worker.post = (): Plugin => ({
-  name: "naxt:worker-post-processing"
-});
+worker.post = (): Plugin => {
+  const licenseRegex = /\/\*\*\n\s*\*\s*@license[\s\S]*?\*\//;
+
+  return {
+    name: "naxt:worker-post-processing",
+
+    transform(code) {
+      let m,
+        licences = "";
+      while ((m = code.match(licenseRegex))) {
+        code = code.replace(licenseRegex, "");
+        licences += `${m[0]}\n`;
+      }
+      config.getConfig("license").append(licences, !!licences);
+    }
+  };
+};
