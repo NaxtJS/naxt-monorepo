@@ -36,30 +36,45 @@ export const worker = (): Plugin => {
     },
 
     transform(code, source) {
-      const path = sources.get(source);
-      const importer = importers.get(source);
+      if (source.startsWith(NULL_CHAR)) return code;
+      if (source.includes("node_modules")) return code;
+      if (!entrypoints.has(source)) return code;
 
-      if (path?.getQueryParam("entrypoint")) {
-      }
+      const sourcePath = Path.from(source);
+      const ast = Parser.parse(code, { ecmaVersion: "latest", sourceType: "module" });
+      const codeMs = new MagicString(code);
+      const basename = sourcePath.basename[0].toUpperCase() + sourcePath.basename.slice(1);
 
-      if (importer?.getQueryParam("entrypoint")) {
-        const ast = Parser.parse(code, {
-          ecmaVersion: "latest",
-          sourceType: "module"
-        });
-        const codeMs = new MagicString(code);
-        const basename = path.basename[0].toUpperCase() + path.basename.slice(1);
+      const declaratorVariableNames = {
+        Identifier: declarator => declarator.id.name,
+        ObjectPattern: declarator => declarator.id.properties.map(property => property.key.name),
+        DEFAULT: declarator => {
+          throw new Error(declarator.type);
+        }
+      };
 
-        simple(ast, {
-          ExportDefaultDeclaration(node: any) {
-            const { declaration } = node;
-            const code = codeMs.slice(declaration.start, declaration.end);
-            codeMs.overwrite(node.start, node.end, `export const ${basename} = ${code}`);
-          }
-        });
+      simple(ast, {
+        ExportDefaultDeclaration(node: any) {
+          const { declaration } = node;
+          const code = codeMs.slice(declaration.start, declaration.end);
+          codeMs.overwrite(node.start, node.end, `export const ${basename} = ${code}`);
+        },
+        ExportNamedDeclaration(node: any) {
+          const { declaration } = node;
+          const variableNames: string[] = declaration.declarations
+            .map(declarator => {
+              const declaratorVariableName =
+                declaratorVariableNames[declarator.id.type] || declaratorVariableNames.DEFAULT;
+              return declaratorVariableName(declarator);
+            })
+            .flat()
+            .filter(Boolean);
 
-        return { code: codeMs.toString() };
-      }
+          console.log(variableNames);
+        }
+      });
+
+      return { code: codeMs.toString() };
     }
   };
 };
