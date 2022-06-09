@@ -3,6 +3,24 @@ import { transpileModule } from "typescript";
 import { Path } from "@naxt/utils";
 
 export const typescript = (): Plugin => {
+  let tsConfigExistsWarn = false;
+  let tsConfigModuleTargetWarn = false;
+
+  const rootTsConfigFile = config.getConfig("appRoot").duplicateTo("tsconfig.json");
+  const tsConfig = rootTsConfigFile.exists ? rootTsConfigFile.source.readAsJSON() : {};
+
+  if (
+    tsConfig?.compilerOptions?.module?.toLowerCase() !== "esnext" ||
+    tsConfig?.compilerOptions?.target?.toLowerCase() !== "esnext"
+  ) {
+    tsConfigModuleTargetWarn = true;
+  }
+  tsConfigExistsWarn = !rootTsConfigFile.exists;
+
+  tsConfig.compilerOptions ||= {};
+  tsConfig.compilerOptions.module = "ESNext";
+  tsConfig.compilerOptions.target = "ESNext";
+
   return {
     name: "naxt:typescript-plugin",
 
