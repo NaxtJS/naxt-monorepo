@@ -1,9 +1,9 @@
 import { rollup, RollupOptions } from "rollup";
-import { NULL_CHAR, Path, resolvePlugins } from "@naxt/runtime";
+import { Path, resolvePlugins, worker } from "@naxt/runtime";
 
 export const parse = async (pages: Path<any>[]) => {
   const rollupOptions: RollupOptions = {
-    input: pages.map(page => page.setQueryParam("entrypoint", true).pathWithQuery),
+    input: pages.map(worker.transformToInputFile),
     output: { format: "module" },
     plugins: resolvePlugins()
   };
