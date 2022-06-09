@@ -6,8 +6,8 @@ import { Path } from "@naxt/utils";
 import { ResolveQuery } from "@naxt/types";
 
 export const worker = (): Plugin => {
-  const importers = new Map<string, Path<ResolveQuery>>();
-  const sources = new Map<string, Path<ResolveQuery>>();
+  const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;
+  const entrypoints = new Set<string>();
 
   return {
     name: "naxt:worker-plugin",
