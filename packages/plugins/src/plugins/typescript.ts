@@ -40,17 +40,35 @@ export const typescript = (): Plugin => {
       }
     },
 
-    transform(code, id) {
-      const path = Path.from(id);
-      const rootTsConfigFile = config.getConfig("appRoot").duplicateTo("tsconfig.json");
-      const tsConfig = rootTsConfigFile.exists ? rootTsConfigFile.source.readAsJSON() : {};
-      tsConfig.compilerOptions ||= {};
-      tsConfig.compilerOptions.module = "ESNext";
-      tsConfig.compilerOptions.target = "ESNext";
+    transform(code, source) {
+      const sourcePath = Path.from(source);
+      if (!sourcePath.extension.isSameTo("ts")) return code;
+      const warning: RollupWarning = {
+        name: "naxt:typescript-plugin",
+        chunkName: "naxt:typescript-plugin",
+        id: source,
+        code,
+        message: ""
+      };
 
-      if (path.extension.isSameTo("ts")) {
-        return transpileModule(code, { compilerOptions: tsConfig.compilerOptions }).outputText;
+      if (tsConfigExistsWarn) {
+        this.warn({
+          ...warning,
+          message: "TSConfig not found. Will be used default values"
+        });
+
+        tsConfigExistsWarn = false;
+        tsConfigModuleTargetWarn = false;
+      } else if (tsConfigModuleTargetWarn) {
+        this.warn({
+          ...warning,
+          message:
+            "tsconfig.compilerOptions.(module|target) is not ESNext. It will be changed automatically"
+        });
+        tsConfigModuleTargetWarn = false;
       }
+
+      return transpileModule(code, { compilerOptions: tsConfig.compilerOptions }).outputText;
     }
   };
 };
