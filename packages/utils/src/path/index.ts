@@ -31,7 +31,9 @@ export class Path<Q extends Query = Query> {
   }
 
   get basename() {
-    return basename(this._path).replace(this.extension.toString(), "").slice(0, -1);
+    const regexString = this.extension.toString();
+    const regex = new RegExp(`${regexString}$`);
+    return this._path.replace(regex, "").slice(0, -1);
   }
 
   get query(): Q {
