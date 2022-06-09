@@ -54,5 +54,8 @@ export const generate = async (bundle: RollupBuild, outputOptions: OutputOptions
           .source.saveFile(html);
       }
     }
+
+    const licences = config.getConfig("license").build();
+    Path.from("LICENSE", appConfig.build.dir).source.saveFile(licences);
   }
 };
