@@ -3,7 +3,11 @@ import { config } from "@naxt/runtime";
 import { PackageJson } from "type-fest";
 
 export const defaultAppConfig = (): AppConfig => {
-  const pkg = config.getConfig("appRoot").duplicateTo("package.json").source.readAsJSON();
+  const pkg: PackageJson = config
+    .getConfig("appRoot")
+    .duplicateTo("package.json")
+    .source.readAsJSON();
+  const root = `#app`;
 
   return {
     cache: { dir: config.getConfig("nodeModules").duplicateTo(".naxt").path },
