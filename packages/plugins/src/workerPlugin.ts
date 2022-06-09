@@ -93,6 +93,10 @@ worker.post = (): Plugin => {
         licences += `${m[0]}\n`;
       }
       config.getConfig("license").append(licences, !!licences);
+
+      if (process.env.NODE_ENV !== "development") {
+        // ToDo: will be minified
+      }
     }
   };
 };
