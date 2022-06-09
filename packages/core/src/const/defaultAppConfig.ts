@@ -18,8 +18,10 @@ export const defaultAppConfig = (): AppConfig => {
       styles: [],
       title: pkg.name
     },
+    plugins: [],
     aliases: {
-      __CONTAINER__: 'document.getElementById("#app")'
+      __ROOT__: root,
+      __CONTAINER__: `document.getElementById("${root}")`
     }
   };
 };
