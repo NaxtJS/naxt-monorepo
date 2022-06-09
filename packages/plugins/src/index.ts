@@ -1,6 +1,9 @@
 import { Plugin } from "rollup";
 import { worker } from "./workerPlugin";
 import { typescript } from "./plugins/typescript";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import { config } from "@naxt/runtime";
 
 export const resolvePlugins = (): Plugin[] => {
   const isBuild = config.getConfig("isBuild");

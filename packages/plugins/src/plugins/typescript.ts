@@ -1,6 +1,7 @@
 import { config, Plugin } from "@naxt/runtime";
 import { transpileModule } from "typescript";
 import { Path } from "@naxt/utils";
+import { RollupWarning } from "rollup";
 
 export const typescript = (): Plugin => {
   let tsConfigExistsWarn = false;

@@ -3,7 +3,8 @@ import { Parser } from "acorn";
 import { simple } from "acorn-walk";
 import MagicString from "magic-string";
 import { Path } from "@naxt/utils";
-import { ResolveQuery } from "@naxt/types";
+import { ENTRYPOINT_BASENAME, NULL_CHAR } from ".";
+import { config } from "@naxt/runtime";
 
 export const worker = (): Plugin => {
   const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;

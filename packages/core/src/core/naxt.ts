@@ -1,4 +1,13 @@
-import { config, getPages, NaxtConfig, parse, generate, Path, resolveConfig } from "@naxt/runtime";
+import {
+  config,
+  getPages,
+  NaxtConfig,
+  parse,
+  generate,
+  Path,
+  resolveConfig,
+  StringBuilder
+} from "@naxt/runtime";
 
 export class Naxt {
   constructor(private naxtConfig: NaxtConfig) {
