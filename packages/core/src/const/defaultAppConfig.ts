@@ -22,6 +22,7 @@ export const defaultAppConfig = (): AppConfig => {
     aliases: {
       __ROOT__: root,
       __CONTAINER__: `document.getElementById("${root}")`
-    }
+    },
+    parser: "@naxt/parser-rollup"
   };
 };

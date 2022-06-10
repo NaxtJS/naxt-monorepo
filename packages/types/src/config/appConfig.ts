@@ -39,10 +39,26 @@ export interface CacheOptions {
   dir: string;
 }
 
+export type Parsers = "@naxt/parser-rollup";
+
+export interface ParserOutput<P, O> {
+  parser: P;
+  parserOptions: O;
+}
+
+export interface Parser<P = any, O = any> {
+  parse(pages: Path<any>[]): Promisify<ParserOutput<P, O>>;
+  generate(
+    parser: Awaited<ReturnType<this["parse"]>>["parser"],
+    parserOptions: Awaited<ReturnType<this["parse"]>>["parserOptions"]
+  ): Promisify<void>;
+}
+
 export interface AppConfig {
   head: Head;
   plugins: Plugin[];
   build: BuildOptions;
   cache: CacheOptions;
   aliases: Record<string, string>;
+  parser: Parsers;
 }
