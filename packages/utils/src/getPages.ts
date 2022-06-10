@@ -1,11 +1,13 @@
 import { glob } from "glob";
 import { config, Path } from "@naxt/runtime";
-import { GetPagesOptions } from "@naxt/types";
+import { GetPagesOptions, Query } from "@naxt/types";
 
-export function getPages(options: GetPagesOptions<true>): Path<any>[];
+export function getPages<T extends Query = Query>(options: GetPagesOptions<true>): Path<T>[];
 export function getPages(options?: GetPagesOptions<false>): string[];
-export function getPages(options: GetPagesOptions<boolean> = {}): (Path<any> | string)[] {
-  const { appRoot } = config.getConfigs("appRoot");
+export function getPages<T extends Query = Query>(
+  options: GetPagesOptions<boolean> = {}
+): (Path<T> | string)[] {
+  const appRoot = config.getConfig("appRoot");
   const pagesRoot = appRoot.duplicateTo("pages");
 
   return glob
