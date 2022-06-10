@@ -100,6 +100,15 @@ export class Path<Q extends Query = Query> {
     return Path.from(_path, root, query);
   }
 
+  copyTo(destination: string | Path) {
+    const destinationPath = Path.from(
+      typeof destination === "string" ? destination : destination.fullPath
+    );
+
+    destinationPath.dirname.source.mkdir();
+    copyFileSync(this.fullPath, destinationPath.fullPath);
+  }
+
   setQueryParam<K extends keyof Q>(key: K, value: Q[K]) {
     if (value !== undefined) {
       this.query[key] = value;
