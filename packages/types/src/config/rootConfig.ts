@@ -5,5 +5,5 @@ export interface RootConfig<T extends Record<string, any>> {
 
   getConfig<K extends keyof T>(name: K): T[K];
 
-  getConfigs<K extends keyof T>(...keys: K[]): Generic<T, K>;
+  getConfigs<K extends keyof T>(keys: K[]): Generic<T, K>;
 }
