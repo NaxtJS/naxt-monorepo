@@ -8,10 +8,14 @@ import { Extension } from "./extension";
 import { Source } from "./source";
 
 export class Path<Q extends Query = Query> {
-  private _query = {} as Q;
-
   constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
     this.define(path, root, query);
+  }
+
+  private _query = {} as Q;
+
+  get query(): Q {
+    return this._query;
   }
 
   private _root: string;
@@ -34,10 +38,6 @@ export class Path<Q extends Query = Query> {
     const regexString = this.extension.toString();
     const regex = new RegExp(`${regexString}$`);
     return this._path.replace(regex, "").slice(0, -1);
-  }
-
-  get query(): Q {
-    return this._query;
   }
 
   get fullPath() {
