@@ -1,5 +1,5 @@
 import { Plugin } from "rollup";
-import { worker } from "./workerPlugin";
+import { WorkerPlugin } from "./workerPlugin";
 import { typescript } from "./plugins/typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
@@ -21,4 +21,4 @@ export const resolvePlugins = (): Plugin[] => {
 
 export const ENTRYPOINT_BASENAME = "naxt:entry";
 export const NULL_CHAR = String.fromCharCode(0x00);
-export { worker } from "./workerPlugin";
+export { WorkerPlugin } from "./workerPlugin";
