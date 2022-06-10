@@ -10,14 +10,23 @@ export class Source<Q extends Query> {
     return new Source<Q>(path);
   }
 
-  // ToDo: Handle arguments
-  read(path = this.path.fullPath) {
+  read(format: BufferEncoding = "utf-8") {
+    const path = this.path.fullPath;
     if (!this.path.exists) {
       // ToDo: Handle Error
       throw new Error(``);
     }
 
-    return readFileSync(path, "utf-8");
+    return readFileSync(path, format);
+  }
+
+  readAsJSON<T extends Record<string, any>>(): T {
+    const content = this.read();
+    return JSON.parse(content) as T;
+  }
+
+  readAsBase64() {
+    return this.read("base64");
   }
 
   listFiles(path = this.path.fullPath) {
@@ -31,11 +40,6 @@ export class Source<Q extends Query> {
   saveFile(source: string) {
     this.mkdir(this.path.dirname.fullPath);
     writeFileSync(this.path.fullPath, source);
-  }
-
-  readAsJSON<T extends Record<string, any>>(): T {
-    const content = this.read();
-    return JSON.parse(content) as T;
   }
 
   findFile(extensions: string[] = []): Path<Q> {
