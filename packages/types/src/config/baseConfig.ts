@@ -1,5 +1,6 @@
 import { AppConfig } from "./appConfig";
 import { Path, StringBuilder } from "@naxt/utils";
+import { ModuleGraph } from "../core";
 
 export interface BaseConfig {
   appConfig: AppConfig;
@@ -10,4 +11,6 @@ export interface BaseConfig {
 
   /* Flags */
   isBuild: boolean;
+
+  moduleGraph: ModuleGraph;
 }
