@@ -6,15 +6,25 @@ import commonjs from "@rollup/plugin-commonjs";
 import { config } from "@naxt/runtime";
 
 export const resolvePlugins = (): Plugin[] => {
-  const isBuild = config.getConfig("isBuild");
+  const { isBuild, appConfig } = config.getConfigs(["isBuild", "appConfig"]);
   const plugins: Plugin[] = [];
 
+  /* All */
+  plugins.push(WorkerPlugin.preProcessing());
+  plugins.push(alias({ entries: appConfig.aliases }));
+
+  /* Media */
+  plugins.push(css());
+  plugins.push(media());
+
+  /* JavaScript */
   plugins.push(typescript());
-  plugins.push(worker());
+  plugins.push(WorkerPlugin.handleJSRules());
   plugins.push(nodeResolve({ browser: true }));
   plugins.push(commonjs());
-  plugins.push(worker.post());
-  // plugins.push(terser());
+
+  /* PostProcessing */
+  plugins.push(WorkerPlugin.postProcessing());
 
   return plugins;
 };
