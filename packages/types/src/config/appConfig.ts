@@ -1,4 +1,5 @@
-import { Plugin } from "@naxt/runtime";
+import { Path, Plugin } from "@naxt/runtime";
+import { Promisify } from "../utils/promisify";
 
 export type ScriptTypes =
   | "application/javascript"

@@ -1,18 +1,12 @@
-import {
-  config,
-  getPages,
-  NaxtConfig,
-  parse,
-  generate,
-  Path,
-  resolveConfig,
-  StringBuilder
-} from "@naxt/runtime";
+import { config, getPages, NaxtConfig, Path, resolveConfig, StringBuilder } from "@naxt/runtime";
+import { Parser } from "@naxt/types";
+import { ModuleGraph } from "./moduleGraph";
 
 export class Naxt {
   constructor(private naxtConfig: NaxtConfig) {
     config.setConfig("appRoot", Path.from(process.cwd()));
     config.setConfig("license", new StringBuilder());
+    config.setConfig("moduleGraph", new ModuleGraph());
 
     try {
       config.setConfig("nodeModules", Path.from(require.resolve("express")).dirname.dirname);
@@ -26,7 +20,6 @@ export class Naxt {
     config.setConfig("isBuild", true);
     const { parser: parserModule } = config.getConfig("appConfig");
     const { parse, generate } = (await import(require.resolve(parserModule))) as Parser;
-
     const pages = getPages({ path: true, absolute: true });
     const { parser, parserOptions } = await parse(pages);
     await generate(parser, parserOptions);

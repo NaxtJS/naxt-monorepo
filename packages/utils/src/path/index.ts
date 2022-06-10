@@ -1,5 +1,5 @@
-import { basename, dirname, isAbsolute, resolve, sep } from "path";
-import { existsSync, statSync } from "fs";
+import { basename, dirname, resolve, sep } from "path";
+import { copyFileSync, existsSync, statSync } from "fs";
 
 import { config } from "@naxt/runtime";
 import { Query } from "@naxt/types";

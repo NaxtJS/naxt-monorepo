@@ -5,6 +5,13 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { config } from "@naxt/runtime";
 
+/* Internal Plugins */
+import { css } from "./plugins/css";
+import { media } from "./plugins/media";
+
+/* External Plugins */
+import alias from "@rollup/plugin-alias";
+
 export const resolvePlugins = (): Plugin[] => {
   const { isBuild, appConfig } = config.getConfigs(["isBuild", "appConfig"]);
   const plugins: Plugin[] = [];
