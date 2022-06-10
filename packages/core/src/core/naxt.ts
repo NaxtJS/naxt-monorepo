@@ -24,9 +24,12 @@ export class Naxt {
   async build() {
     config.setConfig("appConfig", await resolveConfig());
     config.setConfig("isBuild", true);
+    const { parser: parserModule } = config.getConfig("appConfig");
+    const { parse, generate } = (await import(require.resolve(parserModule))) as Parser;
+
     const pages = getPages({ path: true, absolute: true });
-    const { bundle, outputOptions } = await parse(pages);
-    await generate(bundle, outputOptions);
+    const { parser, parserOptions } = await parse(pages);
+    await generate(parser, parserOptions);
   }
 
   async serve() {

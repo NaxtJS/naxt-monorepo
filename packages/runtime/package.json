@@ -6,8 +6,6 @@
   "types": "src/index.ts",
   "dependencies": {
     "@naxt/core": "workspace:^",
-    "@naxt/generator": "workspace:^",
-    "@naxt/parser": "workspace:^",
     "@naxt/plugins": "workspace:^",
     "@naxt/utils": "workspace:^"
   },

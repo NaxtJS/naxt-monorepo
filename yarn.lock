@@ -283,16 +283,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@naxt/generator@workspace:^, @naxt/generator@workspace:packages/generator":
-  version: 0.0.0-use.local
-  resolution: "@naxt/generator@workspace:packages/generator"
-  dependencies:
-    "@types/rimraf": ^3.0.2
-    rimraf: ^3.0.2
-    rollup: ^2.73.0
-  languageName: unknown
-  linkType: soft
-
 "@naxt/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@naxt/monorepo@workspace:."
@@ -309,11 +299,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@naxt/parser@workspace:^, @naxt/parser@workspace:packages/parser":
+"@naxt/parser-rollup@workspace:packages/rollup":
   version: 0.0.0-use.local
-  resolution: "@naxt/parser@workspace:packages/parser"
+  resolution: "@naxt/parser-rollup@workspace:packages/rollup"
   dependencies:
-    rollup: ^2.72.1
+    "@naxt/runtime": "workspace:^"
+    "@types/rimraf": ^3
+    rimraf: ^3.0.2
+    rollup: ^2.75.6
+  peerDependencies:
+    less: "*"
+    sass: "*"
+    stylus: "*"
   languageName: unknown
   linkType: soft
 
@@ -339,8 +336,6 @@ __metadata:
   resolution: "@naxt/runtime@workspace:packages/runtime"
   dependencies:
     "@naxt/core": "workspace:^"
-    "@naxt/generator": "workspace:^"
-    "@naxt/parser": "workspace:^"
     "@naxt/plugins": "workspace:^"
     "@naxt/types": "workspace:^"
     "@naxt/utils": "workspace:^"

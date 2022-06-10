@@ -1,7 +1,28 @@
-import { config, Path } from "@naxt/runtime";
-import { generateHash, StringBuilder } from "@naxt/utils";
-import { OutputOptions, RollupBuild } from "rollup";
+import { OutputOptions, rollup, RollupBuild, RollupOptions } from "rollup";
+import {
+  config,
+  generateHash,
+  Path,
+  resolvePlugins,
+  StringBuilder,
+  WorkerPlugin
+} from "@naxt/runtime";
 import rimraf from "rimraf";
+
+export const parse = async (pages: Path<any>[]) => {
+  const rollupOptions: RollupOptions = {
+    input: pages.map(WorkerPlugin.transformToInputFile),
+    output: { format: "esm" },
+    plugins: resolvePlugins()
+  };
+
+  return {
+    parser: await rollup(rollupOptions),
+    parserOptions: Array.isArray(rollupOptions.output)
+      ? rollupOptions.output
+      : [rollupOptions.output]
+  };
+};
 
 export const generate = async (bundle: RollupBuild, outputOptions: OutputOptions[]) => {
   const appConfig = config.getConfig("appConfig");
@@ -56,6 +77,6 @@ export const generate = async (bundle: RollupBuild, outputOptions: OutputOptions
     }
 
     const licences = config.getConfig("license").build();
-    Path.from("LICENSE", appConfig.build.dir).source.saveFile(licences);
+    licences.length && Path.from("LICENSE", appConfig.build.dir).source.saveFile(licences);
   }
 };
