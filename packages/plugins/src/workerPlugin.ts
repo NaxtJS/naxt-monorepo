@@ -19,7 +19,7 @@ export class WorkerPlugin {
     };
   }
 
-  static handleJSRules(): Plugin {
+  static handleJS(): Plugin {
     const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;
     const entrypoints = new Set<string>();
 

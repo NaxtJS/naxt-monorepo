@@ -26,7 +26,7 @@ export const resolvePlugins = (): Plugin[] => {
 
   /* JavaScript */
   plugins.push(typescript());
-  plugins.push(WorkerPlugin.handleJSRules());
+  plugins.push(WorkerPlugin.handleJS());
   plugins.push(nodeResolve({ browser: true }));
   plugins.push(commonjs());
 
