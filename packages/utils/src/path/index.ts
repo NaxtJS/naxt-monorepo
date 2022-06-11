@@ -8,7 +8,12 @@ import { Extension } from "./extension";
 import { Source } from "./source";
 
 export class Path<Q extends Query = Query> {
-  constructor(path: string, root: Path | string = config.getConfig("appRoot"), query = {} as Q) {
+  constructor(
+    path: string,
+    root: Path | string = config.getConfig("appRoot"),
+    query = {} as Q,
+    private mergePathAndRoot = true
+  ) {
     this.define(path, root, query);
   }
 
@@ -86,9 +91,10 @@ export class Path<Q extends Query = Query> {
   static from<Q extends Query = Query>(
     path: string,
     root: Path | string = config.getConfig("appRoot"),
-    query = {} as Q
+    query = {} as Q,
+    mergePathAndRoot = true
   ) {
-    return new Path(path, root, query);
+    return new Path(path, root, query, mergePathAndRoot);
   }
 
   duplicateTo(path = "") {
@@ -134,8 +140,10 @@ export class Path<Q extends Query = Query> {
     root = (root instanceof Path ? root.fullPath : root) || "";
     let queryString: string;
     [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
-    const fullPath = resolve(root, path);
-    [root, path] = [dirname(fullPath), basename(fullPath)];
+    if (this.mergePathAndRoot) {
+      const fullPath = resolve(root, path);
+      [root, path] = [dirname(fullPath), basename(fullPath)];
+    }
 
     const oldQuery = Object.assign({}, this.query);
     this._query = {} as Q;
