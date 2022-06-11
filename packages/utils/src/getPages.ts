@@ -3,7 +3,7 @@ import { config, Path } from "@naxt/runtime";
 import { GetPagesOptions, Query } from "@naxt/types";
 
 export function getPages<T extends Query = Query>(options: GetPagesOptions<true>): Path<T>[];
-export function getPages(options?: GetPagesOptions<false>): string[];
+export function getPages<T extends Query = Query>(options?: GetPagesOptions<false>): string[];
 export function getPages<T extends Query = Query>(
   options: GetPagesOptions<boolean> = {}
 ): (Path<T> | string)[] {
