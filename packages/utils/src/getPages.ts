@@ -11,10 +11,12 @@ export function getPages<T extends Query = Query>(
   const pagesRoot = appRoot.duplicateTo("pages");
 
   return glob
-    .sync("**", {
-      cwd: pagesRoot.fullPath,
-      nodir: true,
-      absolute: options.absolute || false
-    })
-    .map(path => (options.path ? Path.from(path, pagesRoot) : path));
+    .sync("**", { cwd: pagesRoot.fullPath, nodir: true })
+    .map(path =>
+      options.path
+        ? Path.from(path, pagesRoot, {} as T, false)
+        : options.absolute
+        ? Path.from(path, pagesRoot).fullPath
+        : path
+    );
 }
