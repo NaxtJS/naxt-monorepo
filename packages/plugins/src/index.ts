@@ -20,9 +20,9 @@ export const resolvePlugins = (): Plugin[] => {
   plugins.push(WorkerPlugin.preProcessing());
   plugins.push(alias({ entries: appConfig.aliases }));
 
-  /* Media */
-  plugins.push(css());
-  plugins.push(media());
+  /* Other Files */
+  plugins.push(css()); // css, sass, less, stylus
+  plugins.push(media()); // image/*
 
   /* JavaScript */
   plugins.push(typescript());
