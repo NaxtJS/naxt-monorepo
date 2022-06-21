@@ -50,6 +50,16 @@ export const cssPlugin = (): Plugin => {
       }
     },
 
+    renderChunk(_code, chunk) {
+      const hash = cached.hash;
+      const entrypoint = chunk.getEntrypoint();
+      if (entrypoint) {
+        chunk.getMetadata(entrypoint).importedCss.add(`assets/style.${hash}.css`);
+      }
+
+      return null;
+    },
+
     generateBundle() {
       const code = cached.code;
       const hash = cached.hash;
