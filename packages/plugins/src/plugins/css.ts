@@ -3,7 +3,7 @@ import postcssModules from "postcss-modules";
 import postcss from "postcss";
 import { generateHash } from "@naxt/utils";
 
-export const css = (): Plugin => {
+export const cssPlugin = (): Plugin => {
   const sassExtensions = ["scss", "sass"];
   const cssExtensions = ["css", ...sassExtensions];
   const cached = {
