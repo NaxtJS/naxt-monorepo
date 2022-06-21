@@ -318,6 +318,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@naxt/plugins@workspace:packages/plugins"
   dependencies:
+    "@naxt/runtime": "workspace:^"
     "@rollup/plugin-alias": ^3.1.9
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-node-resolve": ^13.3.0
