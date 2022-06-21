@@ -6,7 +6,16 @@ import { generateHash } from "@naxt/utils";
 export const css = (): Plugin => {
   const sassExtensions = ["scss", "sass"];
   const cssExtensions = ["css", ...sassExtensions];
-  const cached = { positions: {}, fragments: [] };
+  const cached = {
+    positions: {},
+    fragments: [],
+    get code() {
+      return this.fragments.join("");
+    },
+    get hash() {
+      return generateHash(this.code);
+    }
+  };
 
   return {
     name: "naxt:css-plugin",
@@ -42,8 +51,8 @@ export const css = (): Plugin => {
     },
 
     generateBundle() {
-      const code = cached.fragments.join("");
-      const hash = generateHash(code);
+      const code = cached.code;
+      const hash = cached.hash;
 
       code.length &&
         this.emitFile({
