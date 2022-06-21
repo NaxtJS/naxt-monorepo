@@ -67,8 +67,8 @@ export const cssPlugin = (): Plugin => {
       code.length &&
         this.emitFile({
           type: "asset",
-          fileName: `style.${hash}.css`,
           name: `style.${hash}`,
+          fileName: `assets/style.${hash}.css`,
           source: code
         });
     }
