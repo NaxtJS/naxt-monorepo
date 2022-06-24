@@ -1,12 +1,5 @@
 import { OutputOptions, rollup, RollupBuild, RollupOptions } from "rollup";
-import {
-  config,
-  generateHash,
-  Path,
-  resolvePlugins,
-  StringBuilder,
-  WorkerPlugin
-} from "@naxt/runtime";
+import { config, Path, PluginHelper, resolvePlugins } from "@naxt/runtime";
 import rimraf from "rimraf";
 
 export const parse = async (pages: Path<any>[]) => {
