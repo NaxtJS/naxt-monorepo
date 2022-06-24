@@ -10,7 +10,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.182"
   },
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.2.1",
   "reposiory": {
     "type": "git",
     "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
