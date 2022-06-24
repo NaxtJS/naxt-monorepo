@@ -27,7 +27,7 @@ export const parse = async (pages: Path<any>[]) => {
 
 export const generate = async (bundle: RollupBuild, outputOptions: OutputOptions[]) => {
   const appConfig = config.getConfig("appConfig");
-  rimraf.sync(config.getConfig("appConfig").build.dir);
+  rimraf.sync(appConfig.build.dir);
 
   for (const outputOption of outputOptions) {
     const { output } = await bundle.generate(outputOption);
