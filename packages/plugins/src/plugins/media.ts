@@ -26,6 +26,19 @@ export const media = (): Plugin => {
       }
     },
 
+    renderChunk(_code, chunk) {
+      const entrypoint = chunk.getEntrypoint();
+
+      if (entrypoint) {
+        assets.forEach((destination, source) => {
+          Object.keys(chunk.modules).includes(source) &&
+            chunk.getMetadata(entrypoint).importedAssets.add(destination);
+        });
+      }
+
+      return null;
+    },
+
     generateBundle() {
       const { build } = config.getConfig("appConfig");
 
