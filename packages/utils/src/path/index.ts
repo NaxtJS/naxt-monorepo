@@ -36,7 +36,10 @@ export class Path<Q extends Query = Query> {
   }
 
   set path(path: string) {
+    const oldMergePathAndRoot = this.mergePathAndRoot;
+    this.mergePathAndRoot = false;
     this.define(path, this.root, this.query);
+    this.mergePathAndRoot = oldMergePathAndRoot;
   }
 
   get basename() {
