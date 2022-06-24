@@ -36,7 +36,9 @@ export const cssPlugin = (): Plugin => {
         }
 
         if (sourcePath.extension.isSameToOneOf(sassExtensions)) {
-          code = require("sass").compile(code);
+          const { css, loadedUrls, sourceMap } = await require("sass").compileString(code);
+          code = css;
+          // ToDO: handle loadedUrls
         }
 
         if (sourcePath.extension.isSameToOneOf(lessExtensions)) {
