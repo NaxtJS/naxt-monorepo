@@ -155,7 +155,10 @@ export class Path<Q extends Query = Query> {
   }
 
   private parse(path: string, root: Path | string, query: Q) {
-    if (!path) return;
+    if (!path) {
+      path = this.path;
+      root = this.root;
+    }
 
     root = (root instanceof Path ? root.fullPath : root) || "";
     let queryString: string;
