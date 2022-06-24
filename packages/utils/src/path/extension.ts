@@ -18,10 +18,10 @@ export class Extension {
     return extensions.some(extension => this.isSameTo(extension));
   }
 
-  setExt(extension: string) {
+  set(extension?: string) {
     this.path.path = this.path.path.replace(
       new RegExp(`${extname(this.path.path)}$`),
-      extension.startsWith(".") ? extension : `.${extension}`
+      extension ? (extension.startsWith(".") ? extension : `.${extension}`) : ""
     );
 
     return this.path;
