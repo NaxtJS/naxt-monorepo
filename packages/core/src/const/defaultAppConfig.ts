@@ -11,7 +11,12 @@ export const defaultAppConfig = (): AppConfig => {
 
   return {
     cache: { dir: config.getConfig("nodeModules").duplicateTo(".naxt").path },
-    build: { dir: config.getConfig("appRoot").duplicateTo("build").path },
+    build: {
+      dir: config.getConfig("appRoot").duplicateTo("build").path,
+      polyfill: false,
+      isSSR: false,
+      json: { stringify: false, namedExports: true }
+    },
     head: {
       meta: { charset: "UTF-8", description: pkg.description },
       scripts: [],

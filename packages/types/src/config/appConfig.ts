@@ -32,8 +32,18 @@ export interface Head {
   styles: SelfOrAsFunction<(Link | string)[]>;
 }
 
+export interface JsonOptions {
+  stringify: boolean;
+  namedExports: boolean;
+}
+
+export interface PolyfillOptions {}
+
 export interface BuildOptions {
   dir: string;
+  polyfill: boolean | PolyfillOptions;
+  isSSR: boolean;
+  json: JsonOptions;
 }
 
 export interface CacheOptions {
