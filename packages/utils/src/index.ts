@@ -5,3 +5,4 @@ export * from "./plugins";
 export * from "./generateHash";
 export * from "./getPages";
 export * from "./resolveConfig";
+export * from "./stripBOM";
