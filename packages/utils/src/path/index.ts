@@ -163,6 +163,7 @@ export class Path<Q extends Query = Query> {
     root = (root instanceof Path ? root.fullPath : root) || "";
     let queryString: string;
     [path, queryString] = path.includes("?") ? path.split("?") : [path, ""];
+    (path.startsWith(sep) || path.startsWith("/")) && (path = path.slice(1));
     if (this.mergePathAndRoot) {
       const fullPath = resolve(root, path);
       [root, path] = [dirname(fullPath), basename(fullPath)];
