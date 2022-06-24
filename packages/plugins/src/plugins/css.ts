@@ -5,7 +5,8 @@ import { generateHash } from "@naxt/utils";
 
 export const cssPlugin = (): Plugin => {
   const sassExtensions = ["scss", "sass"];
-  const cssExtensions = ["css", ...sassExtensions];
+  const lessExtensions = ["less"];
+  const cssExtensions = ["css", "pcss", "postcss", ...sassExtensions, ...lessExtensions];
   const cached = {
     positions: {},
     fragments: [],
@@ -24,15 +25,24 @@ export const cssPlugin = (): Plugin => {
       const sourcePath = Path.from(source);
 
       if (sourcePath.extension.isSameToOneOf(cssExtensions)) {
+        const postcssPlugins = [];
         const isModule = sourcePath.extension.isSameToOneOf(
           cssExtensions.map(ext => `.module.${ext}`)
         );
-
-        const postcssPlugins = [];
         let json: Record<string, string> = {};
 
         if (isModule) {
           postcssPlugins.push(postcssModules({ getJSON: (_, _json) => (json = _json) }));
+        }
+
+        if (sourcePath.extension.isSameToOneOf(sassExtensions)) {
+          code = require("sass").compile(code);
+        }
+
+        if (sourcePath.extension.isSameToOneOf(lessExtensions)) {
+          const { css, imports } = await require("less").render(code);
+          code = css;
+          // ToDO: handle imports
         }
 
         const postcssInstance = postcss(...postcssPlugins);
