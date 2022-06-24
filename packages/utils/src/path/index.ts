@@ -53,6 +53,10 @@ export class Path<Q extends Query = Query> {
   }
 
   get importPath() {
+    return this.path.split(sep).join("/");
+  }
+
+  get fullImportPath() {
     return this.fullPath.split(sep).join("/");
   }
 
