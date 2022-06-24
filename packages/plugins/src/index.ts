@@ -1,41 +1,75 @@
-import { Plugin } from "rollup";
-import { WorkerPlugin } from "./workerPlugin";
-import { typescript } from "./plugins/typescript";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import { config } from "@naxt/runtime";
+import { PluginHelper } from "./pluginHelper";
+import { config, Plugin, sortUserPlugins, ChunkMetadata } from "@naxt/runtime";
+import { getBuildPlugins } from "./getBuildPlugins";
 
 /* Internal Plugins */
-import { css } from "./plugins/css";
+import { ensureWatchPlugin } from "./plugins/ensureWatchPlugin";
+import { chunkMetadataPlugin } from "./plugins/chunkMetadataPlugin";
+import { polyfillPlugin } from "./plugins/polyfillPlugin";
+import { cssPlugin } from "./plugins/css";
 import { media } from "./plugins/media";
+import { typescript } from "./plugins/typescript";
+import { jsonPlugin } from "./plugins/jsonPlugin";
+import { resolvePathPlugin } from "./plugins/resolvePathPlugin";
+import { naxtPreProcessing } from "./plugins/naxtPreProcessing";
+import { naxtResolveEntries } from "./plugins/naxtResolveEntries";
+import { naxtPostProcessing } from "./plugins/naxtPostProcessing";
+import { commonJsPlugin } from "./plugins/commonJsPlugin";
 
 /* External Plugins */
-import alias from "@rollup/plugin-alias";
+import aliasPlugin from "@rollup/plugin-alias";
+import { nodeResolve as nodeResolvePlugin } from "@rollup/plugin-node-resolve";
+
+declare module "rollup" {
+  export interface RenderedChunk {
+    naxtMetadata: Record<string, ChunkMetadata>;
+    getMetadata(module: string): ChunkMetadata;
+    getEntrypoint(this: RenderedChunk): string;
+  }
+}
 
 export const resolvePlugins = (): Plugin[] => {
   const { isBuild, appConfig } = config.getConfigs(["isBuild", "appConfig"]);
+  const isWatch = false;
+  const userPlugins = sortUserPlugins(appConfig.plugins);
+  const buildPlugins = getBuildPlugins() || { pre: [], post: [] };
   const plugins: Plugin[] = [];
 
-  /* All */
-  plugins.push(WorkerPlugin.preProcessing());
-  plugins.push(alias({ entries: appConfig.aliases }));
-
-  /* Other Files */
-  plugins.push(css()); // css, sass, less, stylus
-  plugins.push(media()); // image/*
-
-  /* JavaScript */
+  /* Pre */
+  plugins.push(naxtPreProcessing());
   plugins.push(typescript());
-  plugins.push(WorkerPlugin.handleJS());
-  plugins.push(nodeResolve({ browser: true }));
-  plugins.push(commonjs());
+  plugins.push(naxtResolveEntries());
+  isWatch && plugins.push(ensureWatchPlugin());
+  isBuild && plugins.push(chunkMetadataPlugin());
+  plugins.push(aliasPlugin({ entries: appConfig.aliases }));
+  plugins.push(resolvePathPlugin());
+  plugins.push(nodeResolvePlugin());
+  plugins.push(commonJsPlugin());
+  plugins.push(media());
+  plugins.push(...userPlugins.pre);
+  appConfig.build.polyfill && plugins.push(polyfillPlugin());
 
-  /* PostProcessing */
-  plugins.push(WorkerPlugin.postProcessing());
+  /* Normal */
+  plugins.push(cssPlugin());
+  plugins.push(jsonPlugin());
+  plugins.push(...userPlugins.normal);
+  plugins.push(...buildPlugins.pre);
+
+  /* Post */
+
+  plugins.push(...userPlugins.post);
+  plugins.push(...buildPlugins.post);
+
+  /* Internal Post Processing Plugins */
+  plugins.push(naxtPostProcessing());
+
+  // internal Server Plugins
+  // isBuild && plugins.push(clientInjectionsPlugin(), importAnalysisPlugin());
 
   return plugins;
 };
 
 export const ENTRYPOINT_BASENAME = "naxt:entry";
 export const NULL_CHAR = String.fromCharCode(0x00);
-export { WorkerPlugin } from "./workerPlugin";
+export const MODULE_POLYFILL_ID = "naxt/module-polyfill";
+export { PluginHelper } from "./pluginHelper";
