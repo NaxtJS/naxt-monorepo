@@ -11,8 +11,16 @@ import rimraf from "rimraf";
 
 export const parse = async (pages: Path<any>[]) => {
   const rollupOptions: RollupOptions = {
-    input: pages.map(WorkerPlugin.transformToInputFile),
-    output: { format: "esm" },
+    input: pages.map(PluginHelper.transformToInputFile),
+    output: {
+      format: "esm",
+      entryFileNames(chunkInfo) {
+        return PluginHelper.cleanInputFile(chunkInfo.facadeModuleId).extension.set("[hash].js")
+          .importPath;
+      },
+      chunkFileNames: "assets/[name].[hash].js",
+      assetFileNames: "assets/[name].[hash].[ext]"
+    },
     plugins: resolvePlugins()
   };
 
