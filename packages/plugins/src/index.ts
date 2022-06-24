@@ -14,10 +14,10 @@ import { resolvePathPlugin } from "./plugins/resolvePathPlugin";
 import { naxtPreProcessing } from "./plugins/naxtPreProcessing";
 import { naxtResolveEntries } from "./plugins/naxtResolveEntries";
 import { naxtPostProcessing } from "./plugins/naxtPostProcessing";
-import { commonJsPlugin } from "./plugins/commonJsPlugin";
 
 /* External Plugins */
 import aliasPlugin from "@rollup/plugin-alias";
+import commonJsPlugin from "@rollup/plugin-commonjs";
 import { nodeResolve as nodeResolvePlugin } from "@rollup/plugin-node-resolve";
 
 declare module "rollup" {
