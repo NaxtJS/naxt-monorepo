@@ -104,8 +104,11 @@ export class Path<Q extends Query = Query> {
     return new Path(path, root, query, mergePathAndRoot);
   }
 
-  duplicateTo(path = "") {
-    return Path.from(path ? path : this.path, path ? this : this.root);
+  duplicateTo(path = "", mergePathAndRoot = true) {
+    const root = this.isDirectory ? this : this.dirname;
+    this.mergePathAndRoot = false;
+    const { path: _path, root: _root, query } = this.parse(path, root, this.query);
+    return Path.from(_path, _root, query, mergePathAndRoot);
   }
 
   relativeTo(path: string) {
