@@ -6,8 +6,16 @@ export const config = new Config<BaseConfig>();
 export const naxt = (naxtConfig: NaxtConfig) => new Naxt(naxtConfig);
 export const NULL_CHAR = String.fromCharCode(0x0000);
 
+/* Core */
 export { defaultAppConfig } from "@naxt/core";
+
+/* Utils */
 export { resolveConfig, Path, getPages, StringBuilder, generateHash } from "@naxt/utils";
-export { NaxtConfig, Plugin, Logger, LoggerLevels } from "@naxt/types";
-export { ModuleGraphItem, ModuleGraph as ModuleGraphType } from "@naxt/types";
-export { resolvePlugins, WorkerPlugin, ENTRYPOINT_BASENAME } from "@naxt/plugins";
+export { sortUserPlugins, stripBOM } from "@naxt/utils";
+
+/* Types */
+export { NaxtConfig, Plugin, Logger, LoggerLevels, PolyfillOptions } from "@naxt/types";
+export { ChunkMetadata, ModuleGraphItem, ModuleGraph as ModuleGraphType } from "@naxt/types";
+
+/* Plugins */
+export { resolvePlugins, PluginHelper, ENTRYPOINT_BASENAME } from "@naxt/plugins";

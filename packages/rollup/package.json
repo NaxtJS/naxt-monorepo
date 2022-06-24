@@ -4,6 +4,14 @@
   "description": "",
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "dependencies": {
+    "@naxt/runtime": "workspace:^",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.6"
+  },
+  "devDependencies": {
+    "@types/rimraf": "^3"
+  },
   "peerDependencies": {
     "less": "*",
     "sass": "*",
@@ -14,13 +22,5 @@
     "type": "git",
     "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
     "directory": "packages/plugins"
-  },
-  "dependencies": {
-    "@naxt/runtime": "workspace:^",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.75.6"
-  },
-  "devDependencies": {
-    "@types/rimraf": "^3"
   }
 }
