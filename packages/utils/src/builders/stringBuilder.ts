@@ -25,10 +25,7 @@ export class StringBuilder {
   }
 
   appendGroup<T>(callback: (value: T) => string, values: T[]) {
-    values.forEach(value => {
-      this.append(callback(value));
-    });
-
+    values.forEach(value => this.append(callback(value)));
     return this;
   }
 
