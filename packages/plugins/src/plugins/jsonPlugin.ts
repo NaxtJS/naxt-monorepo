@@ -1,9 +1,10 @@
 import { dataToEsm } from "@rollup/pluginutils";
 import type { Plugin } from "@naxt/runtime";
 import { config, Path, stripBOM } from "@naxt/runtime";
+import MagicString from "magic-string";
 
 export const jsonPlugin = (): Plugin => {
-  const { isBuild, appConfig } = config.getConfigs(["isBuild", "appConfig"]);
+  const { isBuild, appConfig } = config.getConfigs("appConfig", "isBuild");
   const jsonOptions = appConfig.build.json;
 
   return {
@@ -14,28 +15,17 @@ export const jsonPlugin = (): Plugin => {
       const json = stripBOM(code);
 
       if (!path.extension.isSameToOneOf(["json", "json5"])) return;
+      let resultCode: string;
 
       try {
-        if (jsonOptions.stringify) {
-          if (isBuild) {
-            return {
-              // during build, parse then double-stringify to remove all
-              // unnecessary whitespaces to reduce bundle size.
-              code: `export default JSON.parse(${JSON.stringify(
-                JSON.stringify(JSON.parse(json))
-              )})`,
-              map: { mappings: "" }
-            };
-          } else {
-            return `export default JSON.parse(${JSON.stringify(json)})`;
-          }
-        }
-
-        const parsed = JSON.parse(json);
-        return {
-          code: dataToEsm(parsed, { preferConst: true, namedExports: jsonOptions.namedExports }),
-          map: { mappings: "" }
-        };
+        resultCode = jsonOptions.stringify
+          ? isBuild
+            ? `export default JSON.parse(${JSON.stringify(JSON.stringify(JSON.parse(json)))})`
+            : `export default JSON.parse(${JSON.stringify(json)})`
+          : dataToEsm(JSON.parse(json), {
+              preferConst: true,
+              namedExports: jsonOptions.namedExports
+            });
       } catch (e) {
         const errorMessageList = /\d+/.exec(e.message);
         const position = errorMessageList && parseInt(errorMessageList[0], 10);
