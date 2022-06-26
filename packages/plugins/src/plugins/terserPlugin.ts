@@ -3,8 +3,7 @@ import MagicString from "magic-string";
 
 export const terserPlugin = (): Plugin => {
   const appConfig = config.getConfig("appConfig");
-  const terserOptions =
-    typeof appConfig.build.terserOptions === "boolean" ? {} : appConfig.build.terserOptions;
+  const terserOptions = typeof appConfig.build.minify === "boolean" ? {} : appConfig.build.minify;
 
   return {
     name: "naxt-terser-plugin",

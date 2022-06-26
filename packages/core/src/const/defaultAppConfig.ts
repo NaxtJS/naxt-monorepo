@@ -16,7 +16,7 @@ export const defaultAppConfig = (): AppConfig => {
       polyfill: false,
       isSSR: false,
       json: { stringify: false, namedExports: true },
-      terserOptions: false
+      minify: false
     },
     head: {
       meta: { charset: "UTF-8", description: pkg.description },

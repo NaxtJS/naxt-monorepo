@@ -45,7 +45,7 @@ export interface BuildOptions {
   polyfill: boolean | PolyfillOptions;
   isSSR: boolean;
   json: JsonOptions;
-  terserOptions: boolean | TerserMinifyOptions;
+  minify: boolean | TerserMinifyOptions;
 }
 
 export interface CacheOptions {

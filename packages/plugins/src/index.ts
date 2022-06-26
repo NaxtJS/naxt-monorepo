@@ -57,7 +57,7 @@ export const resolvePlugins = (): Plugin[] => {
   /* Post */
   plugins.push(...userPlugins.post);
   plugins.push(...buildPlugins.post);
-  isBuild && appConfig.build.terserOptions && plugins.push(terserPlugin());
+  isBuild && appConfig.build.minify && plugins.push(terserPlugin());
 
   /* Internal Post Processing Plugins */
   plugins.push(naxtPostProcessing());
