@@ -29,7 +29,7 @@ declare module "rollup" {
 }
 
 export const resolvePlugins = (): Plugin[] => {
-  const { isBuild, appConfig } = config.getConfigs(["isBuild", "appConfig"]);
+  const { isBuild, appConfig } = config.getConfigs("appConfig", "isBuild");
   const isWatch = false;
   const userPlugins = sortUserPlugins(appConfig.plugins);
   const buildPlugins = getBuildPlugins() || { pre: [], post: [] };

@@ -6,7 +6,7 @@ import { polyfill, polyfillPluginLicense } from "./polyfill";
  * ToDo: WIP: Will be implemented in future
  */
 export const polyfillPlugin = (): Plugin => {
-  const { appConfig, isBuild } = config.getConfigs(["isBuild", "appConfig"]);
+  const { appConfig, isBuild } = config.getConfigs("appConfig", "isBuild");
   const polyfillOptions = appConfig.build.polyfill;
   const isSSR = appConfig.build.isSSR;
   const skip = !polyfillOptions || (!isBuild && isSSR);
