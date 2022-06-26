@@ -1,5 +1,6 @@
-import { Path, Plugin } from "@naxt/runtime";
-import { Promisify } from "../utils/promisify";
+import type { Path, Plugin } from "@naxt/runtime";
+import type { Promisify } from "../utils/promisify";
+import type { MinifyOptions as TerserMinifyOptions } from "terser";
 
 export type ScriptTypes =
   | "application/javascript"
@@ -44,6 +45,7 @@ export interface BuildOptions {
   polyfill: boolean | PolyfillOptions;
   isSSR: boolean;
   json: JsonOptions;
+  terserOptions: boolean | TerserMinifyOptions;
 }
 
 export interface CacheOptions {
@@ -71,5 +73,6 @@ export interface AppConfig {
   build: BuildOptions;
   cache: CacheOptions;
   aliases: Record<string, string>;
+  moduleMapper: Record<string, string>;
   parser: Parsers;
 }

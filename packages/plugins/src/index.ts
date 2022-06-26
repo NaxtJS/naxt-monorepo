@@ -13,6 +13,7 @@ import { jsonPlugin } from "./plugins/jsonPlugin";
 import { naxtPreProcessing } from "./plugins/naxtPreProcessing";
 import { naxtResolveEntries } from "./plugins/naxtResolveEntries";
 import { naxtPostProcessing } from "./plugins/naxtPostProcessing";
+import { terserPlugin } from "./plugins/terserPlugin";
 
 /* External Plugins */
 import aliasPlugin from "@rollup/plugin-alias";
@@ -58,6 +59,7 @@ export const resolvePlugins = (): Plugin[] => {
 
   plugins.push(...userPlugins.post);
   plugins.push(...buildPlugins.post);
+  isBuild && appConfig.build.terserOptions && plugins.push(terserPlugin());
 
   /* Internal Post Processing Plugins */
   plugins.push(naxtPostProcessing());

@@ -15,7 +15,8 @@ export const defaultAppConfig = (): AppConfig => {
       dir: config.getConfig("appRoot").duplicateTo("build").path,
       polyfill: false,
       isSSR: false,
-      json: { stringify: false, namedExports: true }
+      json: { stringify: false, namedExports: true },
+      terserOptions: false
     },
     head: {
       meta: { charset: "UTF-8", description: pkg.description },
@@ -28,6 +29,7 @@ export const defaultAppConfig = (): AppConfig => {
       __ROOT__: root,
       __CONTAINER__: `document.getElementById("${root}")`
     },
-    parser: "@naxt/parser-rollup"
+    moduleMapper: {},
+    parser: "rollup"
   };
 };
