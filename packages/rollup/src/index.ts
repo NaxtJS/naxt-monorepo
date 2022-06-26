@@ -1,34 +1,31 @@
-import { OutputOptions, rollup, RollupBuild, RollupOptions } from "rollup";
+import { rollup, RollupOptions } from "rollup";
 import { config, Path, PluginHelper, resolvePlugins } from "@naxt/runtime";
 import rimraf from "rimraf";
 
-export const parse = async (pages: Path<any>[]) => {
-  const rollupOptions: RollupOptions = {
-    input: pages.map(PluginHelper.transformToInputFile),
-    output: {
-      format: "esm",
-      entryFileNames(chunkInfo) {
-        return PluginHelper.cleanInputFile(chunkInfo.facadeModuleId).extension.set("[hash].js")
-          .importPath;
-      },
-      chunkFileNames: "assets/[name].[hash].js",
-      assetFileNames: "assets/[name].[hash].[ext]"
+const resolveOptions = (pages: Path<any>[], isBuild: boolean): RollupOptions => ({
+  input: pages.map(PluginHelper.transformToInputFile),
+  output: {
+    format: "esm",
+    entryFileNames(chunkInfo) {
+      return PluginHelper.cleanInputFile(chunkInfo.facadeModuleId).extension.set("[hash].js")
+        .importPath;
     },
-    plugins: resolvePlugins()
-  };
+    chunkFileNames: "assets/[name].[hash].js",
+    assetFileNames: "assets/[name].[hash].[ext]",
+    sourcemap: isBuild
+  },
+  plugins: resolvePlugins()
+});
 
-  return {
-    parser: await rollup(rollupOptions),
-    parserOptions: Array.isArray(rollupOptions.output)
-      ? rollupOptions.output
-      : [rollupOptions.output]
-  };
-};
+export const bundle = async (pages: Path<any>[]) => {
+  const { appConfig, isBuild } = config.getConfigs("appConfig", "isBuild");
+  const rollupOptions = resolveOptions(pages, isBuild);
+  const bundle = await rollup(rollupOptions);
+  const outputOptions = Array.isArray(rollupOptions.output)
+    ? rollupOptions.output
+    : [rollupOptions.output];
 
-export const generate = async (bundle: RollupBuild, outputOptions: OutputOptions[]) => {
-  const appConfig = config.getConfig("appConfig");
   rimraf.sync(appConfig.build.dir);
-
   for (const outputOption of outputOptions) {
     const { output } = await bundle.generate(outputOption);
 
