@@ -1,7 +1,7 @@
 import { Parser } from "acorn";
 import { simple } from "acorn-walk";
 import MagicString from "magic-string";
-import { ENTRYPOINT_BASENAME, Path, Plugin } from "@naxt/runtime";
+import { config, ENTRYPOINT_BASENAME, Path, Plugin } from "@naxt/runtime";
 import { NULL_CHAR } from "..";
 
 export const naxtResolveEntries = (): Plugin => {
@@ -29,7 +29,9 @@ export const naxtResolveEntries = (): Plugin => {
   return {
     name: "naxt-resolve-entries-plugin",
 
-    resolveId(source) {
+    resolveId(source, importer) {
+      const appConfig = config.getConfig("appConfig");
+
       if (source.startsWith(entryPointBaseName)) {
         return source;
       }
@@ -37,6 +39,11 @@ export const naxtResolveEntries = (): Plugin => {
       if (importer && source.startsWith(".")) {
         return Path.from(importer).duplicateTo(source).source.findFile().fullImportPath;
       }
+
+      // ToDo: Handle module mapper
+      Object.entries(appConfig.moduleMapper).forEach(([moduleName, moduleUrl]) => {
+        console.log(moduleName, moduleUrl);
+      });
     },
 
     load(source) {
