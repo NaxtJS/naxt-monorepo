@@ -20,9 +20,9 @@ export class Source<Q extends Query> {
     return readFileSync(path, format);
   }
 
-  readAsJSON<T extends Record<string, any>>(): T {
+  readAsJSON() {
     const content = this.read();
-    return JSON.parse(content) as T;
+    return JSON.parse(content) as Record<string, unknown>;
   }
 
   readAsBase64() {
