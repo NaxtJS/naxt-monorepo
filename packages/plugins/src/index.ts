@@ -45,11 +45,11 @@ export const resolvePlugins = (): Plugin[] => {
   plugins.push(resolvePathPlugin());
   plugins.push(nodeResolvePlugin());
   plugins.push(commonJsPlugin());
-  plugins.push(media());
   plugins.push(...userPlugins.pre);
   appConfig.build.polyfill && plugins.push(polyfillPlugin());
 
   /* Normal */
+  plugins.push(mediaPlugin());
   plugins.push(cssPlugin());
   plugins.push(jsonPlugin());
   plugins.push(...userPlugins.normal);
