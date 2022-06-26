@@ -23,7 +23,7 @@ export const typescript = (): Plugin => {
   tsConfig.compilerOptions.target = "ESNext";
 
   return {
-    name: "naxt:typescript-plugin",
+    name: "naxt-typescript-plugin",
 
     resolveId(id) {
       const path = Path.from(id);
