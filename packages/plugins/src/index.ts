@@ -42,7 +42,6 @@ export const resolvePlugins = (): Plugin[] => {
   isWatch && plugins.push(ensureWatchPlugin());
   isBuild && plugins.push(chunkMetadataPlugin());
   plugins.push(aliasPlugin({ entries: appConfig.aliases }));
-  plugins.push(resolvePathPlugin());
   plugins.push(nodeResolvePlugin());
   plugins.push(commonJsPlugin());
   plugins.push(...userPlugins.pre);
