@@ -13,6 +13,12 @@ export function chunkMetadataPlugin(): Plugin {
         );
       };
 
+      chunk.getEntrypoint = function () {
+        if (this.facadeModuleId) {
+          return this.facadeModuleId;
+        }
+      };
+
       return null;
     }
   };
