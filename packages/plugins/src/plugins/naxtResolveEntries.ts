@@ -33,6 +33,10 @@ export const naxtResolveEntries = (): Plugin => {
       if (source.startsWith(entryPointBaseName)) {
         return source;
       }
+
+      if (importer && source.startsWith(".")) {
+        return Path.from(importer).duplicateTo(source).source.findFile().fullImportPath;
+      }
     },
 
     load(source) {

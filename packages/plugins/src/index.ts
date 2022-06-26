@@ -10,7 +10,6 @@ import { cssPlugin } from "./plugins/cssPlugin";
 import { mediaPlugin } from "./plugins/mediaPlugin";
 import { typescript } from "./plugins/typescript";
 import { jsonPlugin } from "./plugins/jsonPlugin";
-import { resolvePathPlugin } from "./plugins/resolvePathPlugin";
 import { naxtPreProcessing } from "./plugins/naxtPreProcessing";
 import { naxtResolveEntries } from "./plugins/naxtResolveEntries";
 import { naxtPostProcessing } from "./plugins/naxtPostProcessing";
