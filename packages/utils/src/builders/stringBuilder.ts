@@ -24,8 +24,9 @@ export class StringBuilder {
     return this;
   }
 
-  appendGroup<T>(callback: (value: T) => string, values: T[]) {
-    values.forEach(value => this.append(callback(value)));
+  appendGroup<T>(callback: (value: T, idx: number) => string, values: Set<T> | T[]) {
+    let idx = -1;
+    values.forEach(value => this.append((idx++, callback(value, idx))));
     return this;
   }
 
