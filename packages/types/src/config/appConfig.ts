@@ -52,7 +52,7 @@ export interface CacheOptions {
   dir: string;
 }
 
-export type Parsers = "@naxt/parser-rollup";
+export type Parsers = "@naxt/parser-rollup" | "rollup";
 
 export interface ParserOutput<P, O> {
   parser: P;
