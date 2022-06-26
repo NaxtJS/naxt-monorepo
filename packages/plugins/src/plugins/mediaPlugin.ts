@@ -1,6 +1,6 @@
 import { config, generateHash, Path, Plugin } from "@naxt/runtime";
 
-export const media = (): Plugin => {
+export const mediaPlugin = (): Plugin => {
   const assets = new Map<string, string>();
   const imageMediaMimeTypes = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"];
   const mimeTypes = [...imageMediaMimeTypes];
