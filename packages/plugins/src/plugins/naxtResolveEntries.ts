@@ -64,9 +64,9 @@ ${componentName}();`;
     },
 
     transform(code, source) {
-      if (source.startsWith(NULL_CHAR)) return code;
-      if (source.includes("node_modules")) return code;
-      if (!entrypoints.has(source)) return code;
+      if (source.startsWith(NULL_CHAR)) return;
+      if (source.includes("node_modules")) return;
+      if (!entrypoints.has(source)) return;
       const sourcePath = Path.from(source);
       const basename = sourcePath.basename[0].toUpperCase() + sourcePath.basename.slice(1);
       const msCode = new MagicString(code);

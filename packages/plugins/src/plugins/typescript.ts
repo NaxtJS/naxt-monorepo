@@ -43,7 +43,7 @@ export const typescript = (): Plugin => {
 
     transform(code, source) {
       const sourcePath = Path.from(source);
-      if (!sourcePath.extension.isSameTo("ts")) return code;
+      if (!sourcePath.extension.isSameTo("ts")) return;
       const warning: RollupWarning = {
         name: "naxt:typescript-plugin",
         chunkName: "naxt:typescript-plugin",
