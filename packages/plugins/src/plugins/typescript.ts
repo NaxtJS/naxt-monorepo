@@ -2,6 +2,7 @@ import { config, Plugin } from "@naxt/runtime";
 import { transpileModule } from "typescript";
 import { Path } from "@naxt/utils";
 import { RollupWarning } from "rollup";
+import MagicString from "magic-string";
 
 export const typescript = (): Plugin => {
   let tsConfigExistsWarn = false;
@@ -69,7 +70,9 @@ export const typescript = (): Plugin => {
         tsConfigModuleTargetWarn = false;
       }
 
-      return transpileModule(code, { compilerOptions: tsConfig.compilerOptions }).outputText;
+      const compiledCode = transpileModule(code, { compilerOptions: tsConfig.compilerOptions });
+      const ms = new MagicString(compiledCode.outputText);
+      return { code: ms.toString(), map: ms.generateMap({ hires: true }) };
     }
   };
 };

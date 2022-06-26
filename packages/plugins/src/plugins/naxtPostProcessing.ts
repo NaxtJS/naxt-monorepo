@@ -15,8 +15,7 @@ export const naxtPostProcessing = (): Plugin => {
         code = code.replace(licenseRegex, "");
         license.append(m[0]);
       }
-
-      return code;
+      if (found) return { code: msCode.toString(), map: msCode.generateMap({ hires: true }) };
     },
 
     renderChunk(code, chunk) {

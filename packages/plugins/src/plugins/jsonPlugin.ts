@@ -42,6 +42,9 @@ export const jsonPlugin = (): Plugin => {
         const msg = position ? `, invalid JSON syntax found at line ${position}` : `.`;
         this.error(`Failed to parse JSON file${msg}`, e.idx);
       }
+
+      const ms = new MagicString(resultCode);
+      return { code: ms.toString(), map: ms.generateMap({ hires: true }) };
     }
   };
 };
