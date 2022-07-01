@@ -1,6 +1,7 @@
-import { PluginHelper } from "./pluginHelper";
-import { config, Plugin, sortUserPlugins, ChunkMetadata } from "@naxt/runtime";
+import { config, sortUserPlugins } from "@naxt/runtime";
+import { ChunkMetadata, Plugin } from "@naxt/types";
 import { getBuildPlugins } from "./getBuildPlugins";
+import { PluginHelper } from "./pluginHelper";
 
 /* Internal Plugins */
 import { ensureWatchPlugin } from "./plugins/ensureWatchPlugin";

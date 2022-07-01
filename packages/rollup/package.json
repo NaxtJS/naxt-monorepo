@@ -10,7 +10,9 @@
     "rollup": "^2.75.6"
   },
   "devDependencies": {
-    "@types/rimraf": "^3"
+    "@types/node": "^18.0.0",
+    "@types/rimraf": "^3",
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "less": "*",
@@ -21,6 +23,6 @@
   "reposiory": {
     "type": "git",
     "url": "git+https://github.com/NaxtJS/naxt-monorepo.git",
-    "directory": "packages/plugins"
+    "directory": "packages/rollup"
   }
 }

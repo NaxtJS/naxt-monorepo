@@ -1,7 +1,7 @@
-import { Path, Plugin } from "@naxt/runtime";
-import postcssModules from "postcss-modules";
+import { generateHash, Path } from "@naxt/runtime";
+import { Plugin } from "@naxt/types";
 import postcss from "postcss";
-import { generateHash } from "@naxt/utils";
+import postcssModules from "postcss-modules";
 import MagicString from "magic-string";
 
 /*

@@ -1,6 +1,5 @@
-import { Path } from "@naxt/utils";
-import { ENTRYPOINT_BASENAME, NULL_CHAR } from "./index";
-import { config } from "@naxt/runtime";
+import { ENTRYPOINT_BASENAME, NULL_CHAR } from ".";
+import { config, Path } from "@naxt/runtime";
 
 export class PluginHelper {
   static transformToInputFile(file: string | Path) {

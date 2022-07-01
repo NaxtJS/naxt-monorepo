@@ -1,6 +1,6 @@
-import { config, Plugin } from "@naxt/runtime";
+import { Plugin } from "@naxt/types";
+import { config, Path } from "@naxt/runtime";
 import { transpileModule } from "typescript";
-import { Path } from "@naxt/utils";
 import { RollupWarning } from "rollup";
 import MagicString from "magic-string";
 

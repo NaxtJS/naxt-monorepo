@@ -1,4 +1,5 @@
-import { config, generateHash, Path, Plugin } from "@naxt/runtime";
+import { Plugin } from "@naxt/types";
+import { config, generateHash, Path,  } from "@naxt/runtime";
 
 export const mediaPlugin = (): Plugin => {
   const assets = new Map<string, string>();

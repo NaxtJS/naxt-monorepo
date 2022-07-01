@@ -1,5 +1,5 @@
 import { dataToEsm } from "@rollup/pluginutils";
-import type { Plugin } from "@naxt/runtime";
+import type { Plugin } from "@naxt/types";
 import { config, Path, stripBOM } from "@naxt/runtime";
 import MagicString from "magic-string";
 

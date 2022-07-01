@@ -1,4 +1,4 @@
-import { Logger as ILogger, LoggerLevels } from "@naxt/runtime";
+import { Logger as ILogger, LoggerLevels } from "@naxt/types";
 import { inspect } from "util";
 
 type Message = string | boolean | number;

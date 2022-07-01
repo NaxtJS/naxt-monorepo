@@ -1,4 +1,4 @@
-import type { Plugin } from "@naxt/runtime";
+import type { Plugin } from "@naxt/types";
 
 export const naxtPreProcessing = (): Plugin => {
   return {

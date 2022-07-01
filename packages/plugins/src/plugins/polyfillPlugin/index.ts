@@ -1,4 +1,5 @@
-import { config, Plugin, PolyfillOptions } from "@naxt/runtime";
+import { config } from "@naxt/runtime";
+import { Plugin, PolyfillOptions } from "@naxt/types";
 import { MODULE_POLYFILL_ID } from "../..";
 import { polyfill, polyfillPluginLicense } from "./polyfill";
 

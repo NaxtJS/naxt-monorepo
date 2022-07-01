@@ -1,5 +1,5 @@
-import { config, getPages, NaxtConfig, Path, resolveConfig, StringBuilder } from "@naxt/runtime";
-import { Parser } from "@naxt/types";
+import { config, getPages, Path, resolveConfig, StringBuilder } from "@naxt/runtime";
+import { NaxtConfig, Parser } from "@naxt/types";
 import { ModuleGraph } from "./moduleGraph";
 
 export class Naxt {

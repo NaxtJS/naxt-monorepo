@@ -3,7 +3,6 @@ const isRuntimeExecutable = ["true", "1"].includes(process.env.RUNTIME_EXECUTABL
 
 import yargs from "yargs";
 import {} from "inquirer";
-
 import { naxt } from "@naxt/runtime";
 
 export const cli = (args: string[] = [], cwd = process.cwd()) => {

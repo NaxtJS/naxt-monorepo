@@ -1,4 +1,5 @@
-import { config, Plugin } from "@naxt/runtime";
+import type { Plugin } from "@naxt/types";
+import { config } from "@naxt/runtime";
 import MagicString from "magic-string";
 
 export const terserPlugin = (): Plugin => {
@@ -9,8 +10,8 @@ export const terserPlugin = (): Plugin => {
     name: "naxt-terser-plugin",
 
     async renderChunk(code, chunk, outputOptions) {
-      const terser = require("terser");
-      const minifiedCode = await terser.minify(code, {
+      const { minify } = await import("terser");
+      const minifiedCode = await minify(code, {
         safari10: true,
         ...terserOptions,
         sourceMap: !!outputOptions.sourcemap,

@@ -13,9 +13,8 @@ export { defaultAppConfig } from "@naxt/core";
 export { resolveConfig, Path, getPages, StringBuilder, generateHash } from "@naxt/utils";
 export { sortUserPlugins, stripBOM } from "@naxt/utils";
 
-/* Types */
-export { NaxtConfig, Plugin, Logger, LoggerLevels, PolyfillOptions } from "@naxt/types";
-export { ChunkMetadata, ModuleGraphItem, ModuleGraph as ModuleGraphType } from "@naxt/types";
-
 /* Plugins */
 export { resolvePlugins, PluginHelper, ENTRYPOINT_BASENAME } from "@naxt/plugins";
+
+/* Servers */
+export * from "@naxt/servers";
