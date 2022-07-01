@@ -332,10 +332,13 @@ __metadata:
   resolution: "@naxt/demo@workspace:packages/demo"
   dependencies:
     "@naxt/cli": "workspace:^"
+    "@naxt/core": "workspace:^"
     "@types/less": ^3.0.3
+    "@types/lodash": ^4
     "@types/node": ^18.0.0
     cross-env: ^7.0.3
     less: ^4.1.3
+    lodash: ^4.17.21
     sass: ^1.53.0
     ts-node: ^10.7.0
     typescript: ^4.7.4
@@ -386,13 +389,16 @@ __metadata:
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-node-resolve": ^13.3.0
     "@rollup/pluginutils": ^4.2.1
+    "@types/less": ^3.0.3
     "@types/node": ^18.0.0
     acorn: ^8.7.1
     acorn-walk: ^8.2.0
+    less: ^4.1.3
     magic-string: ^0.26.2
     postcss: ^8.4.14
     postcss-modules: ^4.3.1
     rollup: ^2.75.0
+    sass: ^1.53.0
     terser: ^5.14.1
     typescript: ^4.7.4
   languageName: unknown
@@ -427,7 +433,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@naxt/types@workspace:packages/types"
   dependencies:
+    "@naxt/runtime": "workspace:^"
     "@types/node": ^18.0.0
+    rollup: ^2.75.7
+    terser: ^5.14.1
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft
@@ -436,8 +445,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@naxt/utils@workspace:packages/utils"
   dependencies:
-    "@types/lodash": ^4.14.182
+    "@naxt/runtime": "workspace:^"
+    "@naxt/types": "workspace:^"
+    "@types/lodash": ^4
     "@types/node": ^18.0.0
+    glob: ^8.0.3
     lodash: ^4.17.21
     typescript: ^4.7.4
   languageName: unknown
@@ -675,7 +687,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.182":
+"@types/lodash@npm:^4":
   version: 4.14.182
   resolution: "@types/lodash@npm:4.14.182"
   checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
@@ -2075,6 +2087,19 @@ __metadata:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: 7ac782f3ef1c08005884447479e68ceb0ad56997eb2003e1e9aefae71bad3cb48eb7c49190d3d6736f2ffcd8af4985d53a46831b3d5e0052cc5756822a38b61a
+  languageName: node
+  linkType: hard
+
+"glob@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "glob@npm:8.0.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^5.0.1
+    once: ^1.3.0
+  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
   languageName: node
   linkType: hard
 
@@ -3695,6 +3720,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: df83c6d43a144a296daf82bed7f12f2dfcc6c495a64245e840d15fd21f2ab8b66bb3423e61c974875b33ccf53fb659d2ed099f272937ecf23af48815277c6cd5
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.75.7":
+  version: 2.75.7
+  resolution: "rollup@npm:2.75.7"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: a6331d46b01062b184efdcb42ce12caf2e1575f989963944534b02f5855f6f3bc239ed0c1a18893572d7695af6d83166f3aef59dbd0365084e1531cb67824674
   languageName: node
   linkType: hard
 
