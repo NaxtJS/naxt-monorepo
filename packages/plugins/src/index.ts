@@ -37,6 +37,7 @@ export const resolvePlugins = (): Plugin[] => {
   const userPlugins = sortUserPlugins(appConfig.plugins);
   const buildPlugins = getBuildPlugins() || { pre: [], post: [] };
   const plugins: Plugin[] = [];
+  const outputDir = isBuild ? appConfig.build.dir : appConfig.cache.dir;
 
   /* Pre */
   plugins.push(naxtPreProcessing());
@@ -51,7 +52,7 @@ export const resolvePlugins = (): Plugin[] => {
   appConfig.build.polyfill && plugins.push(polyfillPlugin());
 
   /* Normal */
-  plugins.push(mediaPlugin());
+  plugins.push(mediaPlugin({ outputDir }));
   plugins.push(cssPlugin());
   plugins.push(jsonPlugin());
   plugins.push(...userPlugins.normal);
