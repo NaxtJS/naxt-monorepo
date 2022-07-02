@@ -1,4 +1,4 @@
-import { ModuleGraphItem, ModuleGraph as ModuleGraphType } from "@naxt/types";
+import type { ModuleGraphItem, ModuleGraph as ModuleGraphType } from "@naxt/types";
 
 export class ModuleGraph implements ModuleGraphType {
   private readonly moduleGraphItems: Record<string, ModuleGraphItem> = {};

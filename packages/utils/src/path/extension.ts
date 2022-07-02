@@ -1,6 +1,5 @@
 import { extname } from "path";
-
-import { Query } from "@naxt/types";
+import type { Query } from "@naxt/types";
 import { Path } from ".";
 
 export class Extension {

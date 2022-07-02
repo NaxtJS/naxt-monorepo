@@ -1,6 +1,6 @@
 import { glob } from "glob";
 import { config, Path } from "@naxt/runtime";
-import { GetPagesOptions, Query } from "@naxt/types";
+import type { GetPagesOptions, Query } from "@naxt/types";
 
 export function getPages<T extends Query = Query>(options: GetPagesOptions<true>): Path<T>[];
 export function getPages<T extends Query = Query>(options?: GetPagesOptions<false>): string[];

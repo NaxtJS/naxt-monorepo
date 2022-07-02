@@ -1,6 +1,7 @@
+import type { Path, StringBuilder } from "@naxt/runtime";
 import { AppConfig } from "./appConfig";
-import { Path, StringBuilder } from "@naxt/utils";
 import { ModuleGraph } from "../core";
+import { NaxtConfig } from "./naxtConfig";
 
 export interface BaseConfig {
   appConfig: AppConfig;

@@ -1,8 +1,7 @@
 import { basename, dirname, resolve, sep } from "path";
 import { copyFileSync, existsSync, statSync } from "fs";
-
 import { config } from "@naxt/runtime";
-import { Query } from "@naxt/types";
+import type { Query } from "@naxt/types";
 
 import { Extension } from "./extension";
 import { Source } from "./source";

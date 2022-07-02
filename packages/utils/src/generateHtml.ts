@@ -1,4 +1,4 @@
-import { ChunkMetadata } from "@naxt/types";
+import type { ChunkMetadata } from "@naxt/types";
 import { StringBuilder } from "./builders";
 
 export const generateHtml = (filename: string, meta: ChunkMetadata) => {

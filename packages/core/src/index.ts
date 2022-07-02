@@ -1,4 +1,4 @@
-import { AppConfig } from "@naxt/types";
+import type { AppConfig } from "@naxt/types";
 import { PartialDeep } from "type-fest";
 
 export const defineConfig = (config: PartialDeep<AppConfig>) => config;

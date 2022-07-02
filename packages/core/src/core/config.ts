@@ -1,4 +1,4 @@
-import { RootConfig } from "@naxt/types";
+import type { RootConfig } from "@naxt/types";
 
 export class Config<T extends Record<string, any>> implements RootConfig<T> {
   private readonly config: T = {} as T;

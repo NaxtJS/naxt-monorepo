@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, mkdirSync, writeFileSync } from "fs";
 
-import { Query } from "@naxt/types";
+import type { Query } from "@naxt/types";
 import { Path } from ".";
 
 export class Source<Q extends Query> {

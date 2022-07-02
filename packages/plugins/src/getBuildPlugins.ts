@@ -1,4 +1,4 @@
-import { Plugin } from "@naxt/types";
+import type { Plugin } from "@naxt/types";
 
 export const getBuildPlugins = () => {
   const prePlugins: Plugin[] = [];

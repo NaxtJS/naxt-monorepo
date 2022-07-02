@@ -1,4 +1,4 @@
-import { Plugin } from "@naxt/types";
+import type { Plugin } from "@naxt/types";
 
 /**
  * ToDo: WIP: Will be implemented in future

@@ -1,4 +1,5 @@
-import type { Path, Plugin } from "@naxt/runtime";
+import type { Path } from "@naxt/runtime";
+import type { Plugin } from "../plugin";
 import type { Promisify } from "../utils/promisify";
 import type { MinifyOptions as TerserMinifyOptions } from "terser";
 

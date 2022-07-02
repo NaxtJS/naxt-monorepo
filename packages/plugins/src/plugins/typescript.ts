@@ -1,4 +1,4 @@
-import { Plugin } from "@naxt/types";
+import type { Plugin } from "@naxt/types";
 import { config, Path } from "@naxt/runtime";
 import { transpileModule } from "typescript";
 import { RollupWarning } from "rollup";

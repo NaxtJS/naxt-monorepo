@@ -1,4 +1,4 @@
-import { AppConfig } from "@naxt/types";
+import type { AppConfig } from "@naxt/types";
 import { config } from "@naxt/runtime";
 import { PackageJson } from "type-fest";
 

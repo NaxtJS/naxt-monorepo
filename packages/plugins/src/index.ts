@@ -1,5 +1,5 @@
 import { config, sortUserPlugins } from "@naxt/runtime";
-import { ChunkMetadata, Plugin } from "@naxt/types";
+import type { ChunkMetadata, Plugin } from "@naxt/types";
 import { getBuildPlugins } from "./getBuildPlugins";
 import { PluginHelper } from "./pluginHelper";
 

@@ -1,8 +1,8 @@
 import { Parser } from "acorn";
 import { simple } from "acorn-walk";
 import MagicString from "magic-string";
-import {Plugin} from "@naxt/types";
-import { config, ENTRYPOINT_BASENAME, Path,  } from "@naxt/runtime";
+import type { Plugin } from "@naxt/types";
+import { config, ENTRYPOINT_BASENAME, Path } from "@naxt/runtime";
 import { NULL_CHAR } from "..";
 
 export const naxtResolveEntries = (): Plugin => {
