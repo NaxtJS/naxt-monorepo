@@ -3,7 +3,7 @@ import { simple } from "acorn-walk";
 import MagicString from "magic-string";
 import type { Plugin } from "@naxt/types";
 import { config, ENTRYPOINT_BASENAME, Path } from "@naxt/runtime";
-import { NULL_CHAR } from "..";
+import { NULL_CHAR, pluginsModuleGraph } from "..";
 
 export const naxtResolveEntries = (): Plugin => {
   const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;
@@ -31,14 +31,19 @@ export const naxtResolveEntries = (): Plugin => {
     name: "naxt-resolve-entries-plugin",
 
     resolveId(source, importer) {
+      pluginsModuleGraph.createGraphItem({ name: source });
+      pluginsModuleGraph.createGraphItem({ name: importer });
+      pluginsModuleGraph.addChild(importer, source);
       const appConfig = config.getConfig("appConfig");
 
-      if (source.startsWith(entryPointBaseName)) {
-        return source;
-      }
-
+      if (source.startsWith(entryPointBaseName)) return source;
       if (importer && source.startsWith(".")) {
-        return Path.from(importer).duplicateTo(source).source.findFile().fullImportPath;
+        const childFullPath = Path.from(importer)
+          .duplicateTo(source)
+          .source.findFile().fullImportPath;
+        pluginsModuleGraph.createGraphItem({ name: childFullPath });
+        pluginsModuleGraph.addChild(importer, childFullPath);
+        return childFullPath;
       }
 
       // ToDo: Handle module mapper
