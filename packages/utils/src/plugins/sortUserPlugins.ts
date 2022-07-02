@@ -1,4 +1,4 @@
-import { Plugin } from "@naxt/types";
+import type { Plugin } from "@naxt/types";
 
 export const sortUserPlugins = (plugins: Plugin[]) =>
   plugins.flat().reduce(
