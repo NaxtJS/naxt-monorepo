@@ -1,26 +1,23 @@
 import type { Plugin } from "@naxt/types";
-import { config, generateHash, Path } from "@naxt/runtime";
-//import { config, generateHash, Path } from "@naxt/runtime";
+import { generateHash, Path } from "@naxt/runtime";
 
 export const mediaPlugin = (): Plugin => {
   const assets = new Map<string, string>();
   const imageMediaMimeTypes = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"];
-  const mimeTypes = [...imageMediaMimeTypes];
+  const mediaExtensions = [...imageMediaMimeTypes];
 
   return {
     name: "naxt:media-plugin",
 
     resolveId(source) {
       const sourcePath = Path.from(source);
-      if (sourcePath.extension.isSameToOneOf(mimeTypes)) {
-        return source;
-      }
+      if (sourcePath.extension.isSameToOneOf(mediaExtensions)) return source;
     },
 
     load(source) {
       const sourcePath = Path.from(source);
 
-      if (sourcePath.extension.isSameToOneOf(mimeTypes)) {
+      if (sourcePath.extension.isSameToOneOf(mediaExtensions)) {
         const hash = generateHash(sourcePath.source.readAsBase64());
         const asset = `${sourcePath.basename}.${hash}.${sourcePath.extension}`;
         assets.set(sourcePath.fullPath, asset);
