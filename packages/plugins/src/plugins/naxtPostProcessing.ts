@@ -1,10 +1,14 @@
 import type { Plugin } from "@naxt/types";
-import { ENTRYPOINT_BASENAME, PluginHelper, StringBuilder } from "@naxt/runtime";
+import { ENTRYPOINT_BASENAME, PluginHelper, StringBuilder, generateHtml } from "@naxt/runtime";
 import { NULL_CHAR } from "..";
 import MagicString from "magic-string";
-import { generateHtml } from "@naxt/utils";
 
-export const naxtPostProcessing = (): Plugin => {
+// ToDo: move to types package
+interface NaxtPostProcessingOptions {
+  isBuild: boolean;
+}
+
+export const naxtPostProcessing = ({ isBuild }: NaxtPostProcessingOptions): Plugin => {
   const licenseRegex = /\/\*\*\n\s*\*\s*@license[\s\S]*?\*\//g;
   const license = new StringBuilder();
 
@@ -26,7 +30,7 @@ export const naxtPostProcessing = (): Plugin => {
       if (chunk.facadeModuleId?.startsWith(NULL_CHAR + ENTRYPOINT_BASENAME)) {
         const entryPoint = chunk.getEntrypoint();
         const page = PluginHelper.cleanInputFile(entryPoint);
-        const html = generateHtml(chunk.fileName, chunk.getMetadata(entryPoint));
+        const html = generateHtml(chunk.fileName, chunk.getMetadata(entryPoint), isBuild);
 
         this.emitFile({
           type: "asset",
