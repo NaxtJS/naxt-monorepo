@@ -1,7 +1,12 @@
 import type { Plugin } from "@naxt/types";
 import { generateHash, Path } from "@naxt/runtime";
 
-export const mediaPlugin = (): Plugin => {
+// ToDo: move to types package
+export interface MediaPluginOptions {
+  outputDir: string;
+}
+
+export const mediaPlugin = (options: MediaPluginOptions): Plugin => {
   const assets = new Map<string, string>();
   const imageMediaMimeTypes = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"];
   const mediaExtensions = [...imageMediaMimeTypes];
@@ -39,10 +44,8 @@ export const mediaPlugin = (): Plugin => {
     },
 
     generateBundle() {
-      const { build } = config.getConfig("appConfig");
-
       assets.forEach((destination, source) => {
-        Path.from(source).copyTo(Path.from(`assets/${destination}`, build.dir));
+        Path.from(source).copyTo(Path.from(`assets/${destination}`, options.outputDir));
       });
     }
   };
