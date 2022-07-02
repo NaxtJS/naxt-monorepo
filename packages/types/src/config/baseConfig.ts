@@ -3,7 +3,7 @@ import { AppConfig } from "./appConfig";
 import { ModuleGraph } from "../core";
 import { NaxtConfig } from "./naxtConfig";
 
-export interface BaseConfig {
+export interface BaseConfig extends NaxtConfig {
   appConfig: AppConfig;
   appRoot: Path;
   nodeModules: Path;
