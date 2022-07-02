@@ -1,8 +1,9 @@
-import { generateHash, Path } from "@naxt/runtime";
+import { config, generateHash, Path, PluginHelper } from "@naxt/runtime";
 import type { Plugin } from "@naxt/types";
 import postcss from "postcss";
 import postcssModules from "postcss-modules";
 import MagicString from "magic-string";
+import { pluginsModuleGraph } from "..";
 
 /*
 ...stylusExtensions
@@ -17,16 +18,11 @@ export const cssPlugin = (): Plugin => {
   const sassExtensions = ["scss", "sass"];
   const lessExtensions = ["less"];
   const cssExtensions = ["css", "pcss", "postcss", ...sassExtensions, ...lessExtensions];
-  const cached = {
-    positions: {},
-    fragments: [],
-    get code() {
-      return this.fragments.join("");
-    },
-    get hash() {
-      return generateHash(this.code);
-    }
-  };
+  const sourceMap: Record<string, Set<string>> = {};
+  const sourceCode: Record<
+    string,
+    { position: Record<string, number>; fragments: string[]; styleFileName: string }
+  > = {};
 
   return {
     name: "naxt:css-plugin",
@@ -34,6 +30,10 @@ export const cssPlugin = (): Plugin => {
     async transform(code, source) {
       const sourcePath = Path.from(source);
       if (!sourcePath.extension.isSameToOneOf(cssExtensions)) return;
+      sourceMap[source] ||= new Set();
+      pluginsModuleGraph.getRootParent(source).forEach(parent => {
+        sourceMap[source].add(parent);
+      });
 
       const postcssPlugins = [];
       const isModule = sourcePath.extension.isSameToOneOf(
@@ -59,12 +59,13 @@ export const cssPlugin = (): Plugin => {
 
       const postcssInstance = postcss(...postcssPlugins);
       const { css } = await postcssInstance.process(code, { from: source, map: false });
+      sourceCode[source] ||= { position: {}, fragments: [], styleFileName: "" };
 
-      if (source in cached.positions) {
-        cached.fragments[cached.positions[source]] = css;
+      if (source in sourceCode[source].position) {
+        sourceCode[source].fragments[sourceCode[source].position[source]] = css;
       } else {
-        cached.positions[source] = cached.fragments.length;
-        cached.fragments.push(css);
+        sourceCode[source].position[source] = sourceCode[source].fragments.length;
+        sourceCode[source].fragments.push(css);
       }
 
       if (isModule) {
@@ -76,26 +77,43 @@ export const cssPlugin = (): Plugin => {
     },
 
     renderChunk(_code, chunk) {
-      const hash = cached.hash;
       const entrypoint = chunk.getEntrypoint();
+      const root = config.getConfig("appRoot").duplicateTo("pages").fullPath;
+
       if (entrypoint) {
-        chunk.getMetadata(entrypoint).importedCss.add(`assets/style.${hash}.css`);
+        const fullPath = PluginHelper.cleanInputFile(entrypoint).fullPath;
+        Object.entries(sourceMap).forEach(([source, parents]) => {
+          parents.forEach(parent => {
+            if (parent === fullPath) {
+              const page = Path.from(parent).assignRoot(root).importPath;
+              const pageDirname = page.split("/").slice(0, -1).join("/");
+              const code = sourceCode[source].fragments.join("\n");
+              const hash = generateHash(code);
+              const basename = Path.from(parent).basename;
+              const styleFileName = [pageDirname, `${basename}.${hash}.css`]
+                .filter(Boolean)
+                .join("/");
+              sourceCode[source].styleFileName = styleFileName;
+              chunk.getMetadata(entrypoint).importedCss.add(styleFileName);
+            }
+          });
+        });
       }
 
       return null;
     },
 
     generateBundle() {
-      const code = cached.code;
-      const hash = cached.hash;
-
-      code.length &&
-        this.emitFile({
-          type: "asset",
-          name: `style.${hash}`,
-          fileName: `assets/style.${hash}.css`,
-          source: code
-        });
+      Object.entries(sourceCode).forEach(([, { styleFileName, fragments }]) => {
+        const code = fragments.join("\n");
+        code.length &&
+          this.emitFile({
+            type: "asset",
+            name: styleFileName.split(".").slice(0, -1).join("."),
+            fileName: styleFileName,
+            source: code
+          });
+      });
     }
   };
 };
