@@ -24,15 +24,30 @@ export class ModuleGraph implements ModuleGraphType {
   }
 
   getParent(module: string) {
-    return this.moduleGraphItems[module].parents;
+    return Array.from(this.moduleGraphItems[module].parents);
   }
 
   getRootParent(module: string) {
-    const parents = new Set<string>();
+    const rootParentModules = new Set<string>();
+    const willBeIteratedModules = new Set<string>();
 
-    const graphItem = this.getGraphItem(module);
-    console.log(graphItem);
+    willBeIteratedModules.add(module);
+    while (true) {
+      willBeIteratedModules.forEach(module => {
+        const parentModules = this.getParent(module);
+        if (parentModules.length === 0) {
+          rootParentModules.add(module);
+        } else {
+          parentModules.forEach(parentModule => {
+            willBeIteratedModules.add(parentModule);
+          });
+        }
+        willBeIteratedModules.delete(module);
+      });
 
-    return Array.from(parents).map(parent => this.getGraphItem(parent));
+      if (willBeIteratedModules.size === 0) break;
+    }
+
+    return rootParentModules;
   }
 }
