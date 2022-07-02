@@ -52,7 +52,7 @@ export const cli = (args: string[] = [], cwd = process.cwd()) => {
       "Run production env for app",
       yargs => yargs.version(false).help(),
       ({}) => {
-        naxt({ isDev: false }).serve();
+        naxt({ isDev: false }).serve({ isProd: true });
       }
     )
 

@@ -25,7 +25,7 @@ export class Naxt {
     await bundle(pages);
   }
 
-  async serve() {
+  async serve(options?: ServeOptions) {
     config.setConfig("appConfig", await resolveConfig());
   }
 }
