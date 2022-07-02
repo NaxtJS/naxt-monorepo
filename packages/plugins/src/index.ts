@@ -32,7 +32,7 @@ declare module "rollup" {
 export const pluginsModuleGraph = new ModuleGraph();
 
 export const resolvePlugins = (): Plugin[] => {
-  const { isBuild, appConfig } = config.getConfigs("appConfig", "isBuild");
+  const { isBuild, appConfig, isDev } = config.getConfigs(["appConfig", "isBuild", "isDev"]);
   const isWatch = false;
   const userPlugins = sortUserPlugins(appConfig.plugins);
   const buildPlugins = getBuildPlugins() || { pre: [], post: [] };
@@ -61,7 +61,7 @@ export const resolvePlugins = (): Plugin[] => {
   /* Post */
   plugins.push(...userPlugins.post);
   plugins.push(...buildPlugins.post);
-  isBuild && appConfig.build.minify && plugins.push(terserPlugin());
+  isBuild && !isDev && appConfig.build.minify && plugins.push(terserPlugin());
 
   /* Internal Post Processing Plugins */
   plugins.push(naxtPostProcessing());
