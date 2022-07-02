@@ -1,7 +1,9 @@
 import type { ChunkMetadata } from "@naxt/types";
 import { StringBuilder } from "./builders";
 
-export const generateHtml = (filename: string, meta: ChunkMetadata) => {
+export const generateHtml = (filename: string, meta: ChunkMetadata, isBuild: boolean) => {
+  const time = isBuild ? `` : `?${Date.now()}`;
+
   return (
     new StringBuilder()
       .append(`<!DOCTYPE html>`)
@@ -24,7 +26,7 @@ export const generateHtml = (filename: string, meta: ChunkMetadata) => {
       // .append(`      ${htmlContent}`, !!htmlContent)
       .append(`    </div>`)
       .append()
-      .append(`    <script type="module" src="/${filename}"></script>`, !!filename)
+      .append(`    <script type="module" src="/${filename}${time}"></script>`, !!filename)
       .append(`  </body>`)
       .append(`</html>`)
       .build()
