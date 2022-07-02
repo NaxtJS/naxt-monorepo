@@ -66,5 +66,6 @@ export interface AppConfig {
 }
 
 export interface Parser {
+  bundle(pages: Path<any>[], outputDir: string): Promisify<void>;
   bundle(pages: Path<any>[]): Promisify<void>;
 }
