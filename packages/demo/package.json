@@ -6,9 +6,14 @@
     "dev": "yarn dlx nodemon build",
     "runtime:executable": "cross-env NODE_ENV=development RUNTIME_EXECUTABLE=1 yarn node -r ts-node/register -r @naxt/cli -e \"cli(process.argv.slice(1));\""
   },
+  "dependencies": {
+    "@naxt/core": "workspace:^",
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@naxt/cli": "workspace:^",
     "@types/less": "^3.0.3",
+    "@types/lodash": "^4",
     "@types/node": "^18.0.0",
     "cross-env": "^7.0.3",
     "less": "^4.1.3",

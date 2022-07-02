@@ -397,7 +397,7 @@ __metadata:
     magic-string: ^0.26.2
     postcss: ^8.4.14
     postcss-modules: ^4.3.1
-    rollup: ^2.75.0
+    rollup: ^2.75.7
     sass: ^1.53.0
     terser: ^5.14.1
     typescript: ^4.7.4
@@ -424,7 +424,9 @@ __metadata:
   dependencies:
     "@naxt/runtime": ^0.0.1
     "@naxt/types": "workspace:^"
+    "@types/express": ^4
     "@types/node": ^18.0.0
+    express: ^4.18.1
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft
@@ -434,6 +436,7 @@ __metadata:
   resolution: "@naxt/types@workspace:packages/types"
   dependencies:
     "@naxt/runtime": "workspace:^"
+    "@types/express": ^4.17.13
     "@types/node": ^18.0.0
     rollup: ^2.75.7
     terser: ^5.14.1
@@ -648,7 +651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4":
+"@types/express@npm:^4, @types/express@npm:^4.17.13":
   version: 4.17.13
   resolution: "@types/express@npm:4.17.13"
   dependencies:
@@ -3709,7 +3712,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.75.0, rollup@npm:^2.75.6":
+"rollup@npm:^2.75.6":
   version: 2.75.6
   resolution: "rollup@npm:2.75.6"
   dependencies:
