@@ -1,4 +1,4 @@
-import { config, sortUserPlugins } from "@naxt/runtime";
+import { config, ModuleGraph, sortUserPlugins } from "@naxt/runtime";
 import type { ChunkMetadata, Plugin } from "@naxt/types";
 import { getBuildPlugins } from "./getBuildPlugins";
 import { PluginHelper } from "./pluginHelper";
@@ -28,6 +28,8 @@ declare module "rollup" {
     getEntrypoint(this: RenderedChunk): string;
   }
 }
+
+export const pluginsModuleGraph = new ModuleGraph();
 
 export const resolvePlugins = (): Plugin[] => {
   const { isBuild, appConfig } = config.getConfigs("appConfig", "isBuild");
