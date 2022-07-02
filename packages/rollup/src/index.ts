@@ -17,15 +17,16 @@ const resolveOptions = (pages: Path<any>[], isBuild: boolean): RollupOptions => 
   plugins: resolvePlugins()
 });
 
-export const bundle = async (pages: Path<any>[]) => {
-  const { appConfig, isBuild } = config.getConfigs("appConfig", "isBuild");
+export const bundle = async (pages: Path<any>[], outputDir?: string) => {
+  const { appConfig, isBuild } = config.getConfigs(["appConfig", "isBuild"]);
+  outputDir = outputDir || appConfig.build.dir;
   const rollupOptions = resolveOptions(pages, isBuild);
   const bundle = await rollup(rollupOptions);
   const outputOptions = Array.isArray(rollupOptions.output)
     ? rollupOptions.output
     : [rollupOptions.output];
 
-  rimraf.sync(appConfig.build.dir);
+  rimraf.sync(outputDir);
   for (const outputOption of outputOptions) {
     const { output } = await bundle.generate(outputOption);
 
@@ -39,7 +40,7 @@ export const bundle = async (pages: Path<any>[]) => {
             : new TextDecoder("utf-8").decode(chunk.source)
           : "";
 
-      const filePath = Path.from(chunk.fileName, appConfig.build.dir);
+      const filePath = Path.from(chunk.fileName, outputDir);
       filePath.source.saveFile(source);
     }
   }
