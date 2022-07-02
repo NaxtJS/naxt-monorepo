@@ -1,4 +1,5 @@
-import { readdirSync, readFileSync, mkdirSync, writeFileSync } from "fs";
+import { readFileSync, mkdirSync, writeFileSync } from "fs";
+import glob, { IOptions as GlobOptions } from "glob";
 
 import type { Query } from "@naxt/types";
 import { Path } from ".";
@@ -29,8 +30,21 @@ export class Source<Q extends Query> {
     return this.read("base64");
   }
 
-  listFiles(path = this.path.fullPath) {
-    return readdirSync(path);
+  listFiles(options?: GlobOptions): string[];
+  listFiles(pattern: string, options?: GlobOptions): string[];
+  listFiles(pattern: GlobOptions | string, options?: GlobOptions): string[] {
+    [pattern, options] = [
+      typeof pattern === "string" ? pattern : "**",
+      typeof pattern === "string" ? options : pattern
+    ];
+
+    let isDirectory = false;
+    try {
+      isDirectory = this.path.isDirectory;
+    } catch (e) {}
+    options = options || {};
+    options.cwd = isDirectory ? this.path.fullPath : this.path.root;
+    return glob.sync(pattern, options || {});
   }
 
   mkdir(path = this.path.fullPath) {
@@ -43,7 +57,7 @@ export class Source<Q extends Query> {
   }
 
   findFile(extensions: string[] = []): Path<Q> {
-    const files = this.listFiles(this.path.root);
+    const files = this.listFiles("*");
 
     if (extensions.length) {
       this.path.path = files.find(
