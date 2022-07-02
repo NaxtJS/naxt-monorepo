@@ -4,7 +4,7 @@ import { config, Path, stripBOM } from "@naxt/runtime";
 import MagicString from "magic-string";
 
 export const jsonPlugin = (): Plugin => {
-  const { isBuild, appConfig } = config.getConfigs("appConfig", "isBuild");
+  const { isBuild, appConfig } = config.getConfigs(["appConfig", "isBuild"]);
   const jsonOptions = appConfig.build.json;
 
   return {
