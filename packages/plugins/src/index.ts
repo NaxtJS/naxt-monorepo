@@ -64,7 +64,7 @@ export const resolvePlugins = (): Plugin[] => {
   isBuild && !isDev && appConfig.build.minify && plugins.push(terserPlugin());
 
   /* Internal Post Processing Plugins */
-  plugins.push(naxtPostProcessing());
+  plugins.push(naxtPostProcessing({ isBuild }));
 
   // internal Server Plugins
   // isBuild && plugins.push(clientInjectionsPlugin(), importAnalysisPlugin());
