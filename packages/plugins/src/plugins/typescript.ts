@@ -26,16 +26,16 @@ export const typescript = (): Plugin => {
   return {
     name: "naxt-typescript-plugin",
 
-    resolveId(id) {
-      const path = Path.from(id);
+    resolveId(source) {
+      const path = Path.from(source);
 
       if (path.extension.isSameTo("ts")) {
         return path.pathWithQuery;
       }
     },
 
-    load(id) {
-      const path = Path.from(id);
+    load(source) {
+      const path = Path.from(source);
 
       if (path.extension.isSameTo("ts")) {
         return path.source.read();
