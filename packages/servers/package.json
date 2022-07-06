@@ -6,12 +6,14 @@
   "types": "src/index.ts",
   "dependencies": {
     "@naxt/runtime": "^0.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "ws": "^8.8.0"
   },
   "devDependencies": {
     "@naxt/types": "workspace:^",
     "@types/express": "^4",
     "@types/node": "^18.0.0",
+    "@types/ws": "^8",
     "typescript": "^4.7.4"
   },
   "packageManager": "yarn@3.2.1",

@@ -11,6 +11,7 @@
     "@naxt/types": "workspace:^",
     "@types/express": "^4",
     "@types/node": "^18.0.0",
+    "chokidar": "^3.5.3",
     "express": "^4.18.1",
     "type-fest": "^2.12.2",
     "typescript": "^4.7.4"
