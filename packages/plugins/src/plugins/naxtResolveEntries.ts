@@ -44,7 +44,16 @@ export const naxtResolveEntries = (isLibrary = false): Plugin => {
           .source.findFile().fullImportPath;
         pluginsModuleGraph.createGraphItem({ name: childFullPath });
         pluginsModuleGraph.addChild(importer, childFullPath);
+
+        if (!source.includes("node_modules")) {
+          this.addWatchFile(childFullPath);
+        }
+
         return childFullPath;
+      }
+
+      if (!source.includes("node_modules")) {
+        this.addWatchFile(source);
       }
 
       // ToDo: Handle module mapper
