@@ -4,7 +4,7 @@ import { config, getPages } from "@naxt/runtime";
 import { Logger } from "@naxt/core/src/core/logger";
 
 export class ProdServer {
-  private readonly logger = new Logger("Naxt.Servers.Prod");
+  private readonly logger = new Logger("Servers.Prod     ");
 
   constructor(private server: Server<any>) {}
 

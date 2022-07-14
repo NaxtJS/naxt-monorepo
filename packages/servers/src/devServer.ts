@@ -4,7 +4,7 @@ import { Parser } from "@naxt/types";
 import { resolve } from "path";
 
 export class DevServer {
-  private readonly logger = new Logger("Naxt.Servers.Dev");
+  private readonly logger = new Logger("Servers.Dev      ");
 
   constructor(private server: Server<any>) {}
 
