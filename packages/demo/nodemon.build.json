@@ -1,5 +1,5 @@
 {
-  "ignore": ["build", "../demo"],
+  "ignore": ["build"],
   "ext": "*",
   "watch": [".."],
   "exec": "yarn runtime:executable"

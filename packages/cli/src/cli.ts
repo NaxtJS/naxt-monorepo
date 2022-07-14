@@ -1,6 +1,3 @@
-const isDev = process.env.NODE_ENV === "development";
-const isRuntimeExecutable = ["true", "1"].includes(process.env.RUNTIME_EXECUTABLE);
-
 import yargs from "yargs";
 import {} from "inquirer";
 import { naxt } from "@naxt/runtime";
@@ -58,6 +55,3 @@ export const cli = (args: string[] = [], cwd = process.cwd()) => {
 
     .parse(args);
 };
-
-isRuntimeExecutable && (global.cli = cli);
-!isRuntimeExecutable && isDev && cli(process.argv.slice(2));
