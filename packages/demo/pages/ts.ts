@@ -11,4 +11,5 @@ export default () => {
 
   console.log(image);
   console.log(styles.a);
+  console.log("a", styles.a);
 };
