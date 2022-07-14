@@ -8,22 +8,29 @@ export class Logger implements ILogger {
   private level: LoggerLevels = LoggerLevels.TRACE;
   private timers: Record<string, number> = {};
 
-  /**
-   *  Template Variables:
-   *  - %name - name
-   *  - %level - message level
-   *  - %date - current time
-   *  - %message - message
-   *
-   * @param {string} name
-   * @param {string} template
-   */
-  constructor(private name: string, private template = "[%name][%level][%date]: %message") {}
+  private maxNameLength = 20;
+  private maxLevelLength = 5;
+  private pid: number = process.pid;
+  private template = "[Naxt] %pid - %date [%name] [%level]: %message";
+
+  constructor(private name: string) {
+    if (this.name.length > this.maxNameLength) {
+      // handle max length error
+    }
+  }
 
   private static fixMessage(message: Message) {
     return typeof message === "object"
       ? inspect(message, { colors: true, depth: 2 })
       : message.toString();
+  }
+
+  private static padStart(str: string, length: number) {
+    let result = (" ".repeat(length) + str).slice(-length);
+    if (str.length > length) {
+      result = "..." + str.slice(3);
+    }
+    return result;
   }
 
   setLevel(level: LoggerLevels) {
@@ -81,14 +88,15 @@ export class Logger implements ILogger {
 
   private print(message: Message[], level: LoggerLevels) {
     const variables = {
-      name: this.name,
-      level: LoggerLevels[level].toLowerCase(),
+      name: Logger.padStart(this.name, this.maxNameLength),
+      level: Logger.padStart(LoggerLevels[level].toLowerCase(), this.maxLevelLength),
+      pid: this.pid,
       date: new Date().toDateString(),
       message: message.map(Logger.fixMessage).join(" ")
     };
 
     const template = Object.entries(variables).reduce(
-      (acc, [variable, value]) => acc.replace(`%${variable}`, value),
+      (acc, [variable, value]) => acc.replace(`%${variable}`, value.toString()),
       this.template
     );
 
