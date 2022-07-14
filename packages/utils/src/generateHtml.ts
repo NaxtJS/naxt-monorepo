@@ -16,8 +16,8 @@ export const generateHtml = (filename: string, meta: ChunkMetadata, isBuild: boo
         meta.importedCss
       )
       .appendGroup(
-        asset => `    <link rel="preload" href="/${asset}" as="style" />`,
-        meta.importedAssets
+        ([asset, chunk]) => `    <link rel="preload" href="/${asset}" as="${chunk.type}" />`,
+        Object.entries(meta.importedAssets)
       )
       .append(`  </head>`)
       .append()
