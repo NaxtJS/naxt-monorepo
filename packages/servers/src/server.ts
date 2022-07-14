@@ -62,12 +62,19 @@ export class Server<T extends Record<string, Endpoint>> {
     }
 
     this.middlewares.forEach(middleware => this.app.use(middleware));
-    Object.entries(this.endpoints).forEach(([path, handler]) => {
-      this.app.get(path, handler);
+    let server: http.Server;
+    await new Promise<void>(res => {
+      server = this.app.listen(port, () => {
+        this.logger.info(`Server started on port ${port}`);
+        res();
+      });
     });
 
-    this.app.listen(port, () => {
-      this.logger.info(`Server started on port ${port}`);
-    });
+    for (const event in this.httpEvents) {
+      const handlers = this.httpEvents[event];
+      handlers.forEach(handler => server.on(event, handler));
+    }
+
+    return this;
   }
 }
