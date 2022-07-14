@@ -31,10 +31,11 @@ export const naxtResolveEntries = (isLibrary = false): Plugin => {
     name: "naxt-resolve-entries-plugin",
 
     resolveId(source, importer) {
+      const appConfig = config.getConfig("appConfig");
+
       pluginsModuleGraph.createGraphItem({ name: source });
       pluginsModuleGraph.createGraphItem({ name: importer });
       pluginsModuleGraph.addChild(importer, source);
-      const appConfig = config.getConfig("appConfig");
 
       if (source.startsWith(entryPointBaseName)) return source;
       if (importer && source.startsWith(".")) {
