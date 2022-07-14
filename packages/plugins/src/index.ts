@@ -1,5 +1,6 @@
 import { config, ModuleGraph, sortUserPlugins } from "@naxt/runtime";
 import type { ChunkMetadata, Plugin } from "@naxt/types";
+import { ResolvePluginsOptions } from "@naxt/types";
 import { getBuildPlugins } from "./getBuildPlugins";
 import { PluginHelper } from "./pluginHelper";
 
@@ -37,18 +38,19 @@ declare module "rollup" {
 
 export const pluginsModuleGraph = new ModuleGraph();
 
-export const resolvePlugins = (): Plugin[] => {
+export const resolvePlugins = (options?: ResolvePluginsOptions): Plugin[] => {
   const { isBuild, appConfig, isDev } = config.getConfigs(["appConfig", "isBuild", "isDev"]);
   const isWatch = false;
   const userPlugins = sortUserPlugins(appConfig.plugins);
   const buildPlugins = getBuildPlugins() || { pre: [], post: [] };
   const plugins: Plugin[] = [];
   const outputDir = isBuild ? appConfig.build.dir : appConfig.cache.dir;
+  const { isLibrary } = options || {};
 
   /* Pre */
   plugins.push(naxtPreProcessing());
   plugins.push(typescript());
-  plugins.push(naxtResolveEntries());
+  plugins.push(naxtResolveEntries(isLibrary));
   isWatch && plugins.push(ensureWatchPlugin());
   plugins.push(chunkMetadataPlugin());
   plugins.push(aliasPlugin({ entries: appConfig.aliases }));
