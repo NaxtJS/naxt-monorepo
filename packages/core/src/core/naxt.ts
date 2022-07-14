@@ -51,6 +51,17 @@ export class Naxt {
     wsServer.emit("start", "welcome");
 
     await runtimeServer.handle();
-    server.start();
+    await wsServer.inject();
+    await server.start();
+
+    watcher
+      .on("add", filename => {
+        watcher.addWatchingFile(filename);
+      })
+      .on("change", async filename => {
+        await runtimeServer.handle();
+      })
+      .addWatchingFile(appRoot.duplicateTo("pages").fullPath)
+      .watch();
   }
 }
