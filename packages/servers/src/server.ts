@@ -26,11 +26,6 @@ export class Server<T extends Record<string, Endpoint>> {
     return this;
   }
 
-  setStaticPath(path: string) {
-    this.staticPath = path;
-    return this;
-  }
-
   setHeader(name: string, value: string) {
     this.headers[name] = value;
     return this;
