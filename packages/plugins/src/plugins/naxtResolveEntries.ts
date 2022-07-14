@@ -5,13 +5,7 @@ import type { Plugin } from "@naxt/types";
 import { config, ENTRYPOINT_BASENAME, Path } from "@naxt/runtime";
 import { NULL_CHAR, pluginsModuleGraph } from "..";
 
-export const naxtResolveEntries = (): Plugin => {
-  const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;
-  const entrypoints = new Set<string>();
-  const reservedVariables = [];
-  let licenseAdded = false;
-
-  const license = `/**
+const license = `/**
  * @license
  * NaxtJS <https://github.com/NaxtJS/naxt-monorepo/wiki>
  * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
@@ -19,13 +13,19 @@ export const naxtResolveEntries = (): Plugin => {
  * Copyright MDReal
  */`;
 
-  const declaratorVariableNames = {
-    Identifier: declarator => declarator.id.name,
-    ObjectPattern: declarator => declarator.id.properties.map(property => property.key.name),
-    DEFAULT: declarator => {
-      throw new Error(declarator.type);
-    }
-  };
+const declaratorVariableNames = {
+  Identifier: declarator => declarator.id.name,
+  ObjectPattern: declarator => declarator.id.properties.map(property => property.key.name),
+  DEFAULT: declarator => {
+    throw new Error(declarator.type);
+  }
+};
+
+export const naxtResolveEntries = (isLibrary = false): Plugin => {
+  const entryPointBaseName = `${NULL_CHAR}${ENTRYPOINT_BASENAME}`;
+  const entrypoints = new Set<string>();
+  const reservedVariables = [];
+  let licenseAdded = false;
 
   return {
     name: "naxt-resolve-entries-plugin",
