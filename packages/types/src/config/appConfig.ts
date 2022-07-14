@@ -1,7 +1,8 @@
+import type { MinifyOptions as TerserMinifyOptions } from "terser";
+import type { InputOption, OutputOptions } from "rollup";
 import type { Path } from "@naxt/runtime";
 import type { Plugin } from "../plugin";
 import type { Promisify } from "../utils/promisify";
-import type { MinifyOptions as TerserMinifyOptions } from "terser";
 
 export type ScriptTypes =
   | "application/javascript"
@@ -56,6 +57,8 @@ export interface CacheOptions {
 export type Parsers = "@naxt/parser-rollup" | "rollup";
 
 export interface AppConfig {
+  input?: InputOption;
+  output?: OutputOptions | OutputOptions[];
   head: Head;
   plugins: Plugin[];
   build: BuildOptions;
@@ -66,6 +69,5 @@ export interface AppConfig {
 }
 
 export interface Parser {
-  bundle(pages: Path<any>[], outputDir: string): Promisify<void>;
-  bundle(pages: Path<any>[]): Promisify<void>;
+  bundle(outputDir?: string): Promisify<void>;
 }

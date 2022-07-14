@@ -1,2 +1,2 @@
 export * from "./getPagesOptions";
-export * from "./serveOptions";
+export * from "./resolvePluginsOptions";
