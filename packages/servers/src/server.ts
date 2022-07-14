@@ -1,14 +1,15 @@
-import { config, Config, Logger } from "@naxt/runtime";
-import type { BaseConfig, Endpoint } from "@naxt/types";
-import express, { Application, Express, RequestHandler } from "express";
+import { config, Logger } from "@naxt/runtime";
+import type { Endpoint } from "@naxt/types";
+import express, { Express, RequestHandler } from "express";
+import http from "http";
 
 export class Server<T extends Record<string, Endpoint>> {
   private readonly endpoints: T;
   private readonly app: Express;
   private readonly middlewares: RequestHandler[] = [];
   private readonly headers: Record<string, string> = {};
-  private readonly logger = new Logger("Naxt.Servers.Dev");
-  private staticPath: string = "";
+  private readonly logger = new Logger("Servers.Core     ");
+  private readonly httpEvents: Record<string, ((...args: any[]) => void)[]> = {};
 
   constructor() {
     this.app = express();
@@ -35,7 +36,13 @@ export class Server<T extends Record<string, Endpoint>> {
     return this;
   }
 
-  start() {
+  on(event: string, handler: (...args: any[]) => void) {
+    this.httpEvents[event] ||= [];
+    this.httpEvents[event].push(handler);
+    return this;
+  }
+
+  async start() {
     const port = config.getConfig("port");
 
     if (Object.keys(this.headers).length > 0) {
