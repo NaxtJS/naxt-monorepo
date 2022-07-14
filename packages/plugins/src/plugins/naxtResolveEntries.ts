@@ -74,6 +74,8 @@ ${componentName}();`;
       if (source.startsWith(NULL_CHAR)) return;
       if (source.includes("node_modules")) return;
       if (!entrypoints.has(source)) return;
+      if (isLibrary) return;
+
       const sourcePath = Path.from(source);
       const basename = sourcePath.basename[0].toUpperCase() + sourcePath.basename.slice(1);
       const msCode = new MagicString(code);
