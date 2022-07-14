@@ -24,7 +24,9 @@ import { nodeResolve as nodeResolvePlugin } from "@rollup/plugin-node-resolve";
 declare module "rollup" {
   export interface RenderedChunk {
     naxtMetadata: Record<string, ChunkMetadata>;
+
     getMetadata(module: string): ChunkMetadata;
+
     getEntrypoint(this: RenderedChunk): string;
   }
 }

@@ -5,11 +5,11 @@ export function chunkMetadataPlugin(): Plugin {
     name: "naxt-chunk-build-metadata-plugin",
 
     renderChunk(_code, chunk) {
-      chunk.naxtMetadata = {};
+      chunk.naxtMetadata ||= {};
       chunk.getMetadata = module => {
         return (
           chunk.naxtMetadata[module] ||
-          (chunk.naxtMetadata[module] = { importedAssets: new Set(), importedCss: new Set() })
+          (chunk.naxtMetadata[module] = { importedAssets: {}, importedCss: new Set() })
         );
       };
 
