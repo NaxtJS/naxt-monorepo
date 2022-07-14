@@ -14,10 +14,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/code-frame@npm:^7.16.7":
+  version: 7.18.6
+  resolution: "@babel/code-frame@npm:7.18.6"
+  dependencies:
+    "@babel/highlight": ^7.18.6
+  checksum: 195e2be3172d7684bf95cff69ae3b7a15a9841ea9d27d3c843662d50cdd7d6470fd9c8e64be84d031117e4a4083486effba39f9aef6bbb2c89f7f21bcfba33ba
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.16.7":
   version: 7.16.7
   resolution: "@babel/helper-validator-identifier@npm:7.16.7"
   checksum: dbb3db9d184343152520a209b5684f5e0ed416109cde82b428ca9c759c29b10c7450657785a8b5c5256aa74acc6da491c1f0cf6b784939f7931ef82982051b69
+  languageName: node
+  linkType: hard
+
+"@babel/helper-validator-identifier@npm:^7.18.6":
+  version: 7.18.6
+  resolution: "@babel/helper-validator-identifier@npm:7.18.6"
+  checksum: e295254d616bbe26e48c196a198476ab4d42a73b90478c9842536cf910ead887f5af6b5c4df544d3052a25ccb3614866fa808dc1e3a5a4291acd444e243c0648
   languageName: node
   linkType: hard
 
@@ -29,6 +45,17 @@ __metadata:
     chalk: ^2.0.0
     js-tokens: ^4.0.0
   checksum: 7bdf10228f2e4d18f48f114411ed584380d356e7c168d7582c14abd8df9909b2fc09e0a7cd334f47c3eb0bc17e639e0c8d9688c6afd5d09a2bdbf0ac193b11fd
+  languageName: node
+  linkType: hard
+
+"@babel/highlight@npm:^7.18.6":
+  version: 7.18.6
+  resolution: "@babel/highlight@npm:7.18.6"
+  dependencies:
+    "@babel/helper-validator-identifier": ^7.18.6
+    chalk: ^2.0.0
+    js-tokens: ^4.0.0
+  checksum: 92d8ee61549de5ff5120e945e774728e5ccd57fd3b2ed6eace020ec744823d4a98e242be1453d21764a30a14769ecd62170fba28539b211799bbaf232bbb2789
   languageName: node
   linkType: hard
 
@@ -300,10 +327,16 @@ __metadata:
   resolution: "@naxt/cli@workspace:packages/cli"
   dependencies:
     "@naxt/runtime": "workspace:^"
+    "@rollup/plugin-typescript": ^8.3.3
     "@types/inquirer": ^8.2.1
     "@types/node": ^18.0.0
+    "@types/rimraf": ^3
     "@types/yargs": ^17.0.10
     inquirer: ^8.2.4
+    rimraf: ^3.0.2
+    rollup: ^2.76.0
+    rollup-plugin-dts: ^4.2.2
+    tslib: ^2.4.0
     typescript: ^4.7.4
     yargs: ^17.5.1
   bin:
@@ -317,6 +350,11 @@ __metadata:
   dependencies:
     "@naxt/cli": "workspace:^"
     "@naxt/core": "workspace:^"
+    "@rollup/plugin-typescript": ^8.3.3
+    "@types/rimraf": ^3
+    rimraf: ^3.0.2
+    rollup: ^2.76.0
+    tslib: ^2.4.0
   languageName: unknown
   linkType: soft
 
@@ -556,6 +594,23 @@ __metadata:
   peerDependencies:
     rollup: ^2.42.0
   checksum: ec5418e6b3c23a9e30683056b3010e9d325316dcfae93fbc673ae64dad8e56a2ce761c15c48f5e2dcfe0c822fdc4a4905ee6346e3dcf90603ba2260afef5a5e6
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-typescript@npm:^8.3.3":
+  version: 8.3.3
+  resolution: "@rollup/plugin-typescript@npm:8.3.3"
+  dependencies:
+    "@rollup/pluginutils": ^3.1.0
+    resolve: ^1.17.0
+  peerDependencies:
+    rollup: ^2.14.0
+    tslib: "*"
+    typescript: ">=3.7.0"
+  peerDependenciesMeta:
+    tslib:
+      optional: true
+  checksum: c255f8bc3b4d94b81a96d7bf5ba426e4e0a9dc68b96be48d97c6646c1c7dcd08319d08805d93306adfa57f87b080ff4a05198e581592ecf6aba06b752006b5f5
   languageName: node
   linkType: hard
 
@@ -2746,7 +2801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.26.2":
+"magic-string@npm:^0.26.1, magic-string@npm:^0.26.2":
   version: 0.26.2
   resolution: "magic-string@npm:0.26.2"
   dependencies:
@@ -3713,6 +3768,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rollup-plugin-dts@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "rollup-plugin-dts@npm:4.2.2"
+  dependencies:
+    "@babel/code-frame": ^7.16.7
+    magic-string: ^0.26.1
+  peerDependencies:
+    rollup: ^2.55
+    typescript: ^4.1
+  dependenciesMeta:
+    "@babel/code-frame":
+      optional: true
+  checksum: cf4b45f6cca442a5f44af0f0fb567c8fc540ecb792c763571d1bcda9bf495803bcc8d4eaef451a2dd32f7f391eb822e2b96cc6b86b096db54a4d3935236fd8da
+  languageName: node
+  linkType: hard
+
 "rollup@npm:^2.75.6":
   version: 2.75.6
   resolution: "rollup@npm:2.75.6"
@@ -3738,6 +3809,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: a6331d46b01062b184efdcb42ce12caf2e1575f989963944534b02f5855f6f3bc239ed0c1a18893572d7695af6d83166f3aef59dbd0365084e1531cb67824674
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.76.0":
+  version: 2.76.0
+  resolution: "rollup@npm:2.76.0"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 58293e1c63c11d4afcfcf619601d5c5136dd3d0c9d3bd6a0b6141fede32027edc1eb53873bbb9a9c1e95e86c67f6ad66185720031b6eadf325972174d1d8fbcb
   languageName: node
   linkType: hard
 
@@ -4247,7 +4332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.0":
+"tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
