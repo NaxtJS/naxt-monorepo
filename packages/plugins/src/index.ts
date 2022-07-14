@@ -29,6 +29,10 @@ declare module "rollup" {
 
     getEntrypoint(this: RenderedChunk): string;
   }
+
+  interface OutputOptions {
+    nonAssetFile?: string;
+  }
 }
 
 export const pluginsModuleGraph = new ModuleGraph();

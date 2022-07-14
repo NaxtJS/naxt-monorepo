@@ -4,6 +4,7 @@ import postcss from "postcss";
 import postcssModules from "postcss-modules";
 import MagicString from "magic-string";
 import { pluginsModuleGraph } from "..";
+import { RollupOptions } from "rollup";
 
 /*
 ...stylusExtensions
@@ -23,9 +24,18 @@ export const cssPlugin = (): Plugin => {
     string,
     { position: Record<string, number>; fragments: string[]; styleFileName: string }
   > = {};
+  let fileTemplate: string;
 
   return {
     name: "naxt:css-plugin",
+
+    options(options: RollupOptions) {
+      const outputOptions = Array.isArray(options.output) ? options.output : [options.output];
+
+      fileTemplate =
+        outputOptions.find(option => option.nonAssetFile)?.nonAssetFile ||
+        "assets/[name].[hash].[ext]";
+    },
 
     async transform(code, source) {
       const sourcePath = Path.from(source);
@@ -90,7 +100,14 @@ export const cssPlugin = (): Plugin => {
               const code = sourceCode[source].fragments.join("\n");
               const hash = generateHash(code);
               const basename = Path.from(parent).basename;
-              const styleFileName = [pageDirname, `${basename}.${hash}.css`]
+
+              const styleFileName = [
+                pageDirname,
+                fileTemplate
+                  .replace("[name]", basename)
+                  .replace("[hash]", hash)
+                  .replace("[ext]", "css")
+              ]
                 .filter(Boolean)
                 .join("/");
               sourceCode[source].styleFileName = styleFileName;
