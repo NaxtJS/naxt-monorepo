@@ -49,9 +49,18 @@ export class Server<T extends Record<string, Endpoint>> {
       });
     }
 
-    if (this.staticPath) {
-      this.middleware(express.static(this.staticPath));
+    const endpointEntries = Object.entries(this.endpoints);
+    if (endpointEntries.length > 0) {
+      this.middleware((req, res, next) => {
+        for (const entry of endpointEntries) {
+          const [path, endpoint] = entry;
+          if (req.path === path) return endpoint(req, res);
+        }
+
+        res.end(`Path ${req.path} not found`);
+      });
     }
+
     this.middlewares.forEach(middleware => this.app.use(middleware));
     Object.entries(this.endpoints).forEach(([path, handler]) => {
       this.app.get(path, handler);
