@@ -6,7 +6,7 @@ export class PluginHelper {
     return `${NULL_CHAR}${ENTRYPOINT_BASENAME}?page=${file instanceof Path ? file.fullPath : file}`;
   }
 
-  static cleanInputFile(input: string): Path | null {
+  static cleanInputFile(input: string): Path {
     if (
       input.startsWith(NULL_CHAR + ENTRYPOINT_BASENAME) ||
       input.startsWith(ENTRYPOINT_BASENAME)
@@ -16,6 +16,6 @@ export class PluginHelper {
       return Path.from(path.query.page).assignRoot(appRoot.duplicateTo("pages"));
     }
 
-    return null;
+    return Path.from(input);
   }
 }
