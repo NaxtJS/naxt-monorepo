@@ -40,7 +40,7 @@ export const cli = (args: string[] = [], cwd = process.cwd()) => {
       yargs =>
         yargs.option("dev", { alias: "d", type: "boolean", default: false }).version(false).help(),
       ({ dev }) => {
-        naxt({ isDev: dev }).build();
+        naxt({ isDev: dev, isProd: !dev }).build();
       }
     )
 
@@ -49,7 +49,7 @@ export const cli = (args: string[] = [], cwd = process.cwd()) => {
       "Run production env for app",
       yargs => yargs.version(false).help(),
       ({}) => {
-        naxt({ isDev: false }).serve({ isProd: true });
+        naxt({ isDev: false, isProd: true }).serve();
       }
     )
 

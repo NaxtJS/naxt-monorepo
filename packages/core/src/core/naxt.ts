@@ -1,12 +1,22 @@
-import { config, getPages, Path, resolveConfig, StringBuilder } from "@naxt/runtime";
-import type { NaxtConfig, Parser, ServeOptions } from "@naxt/types";
+import {
+  config,
+  DevServer,
+  Path,
+  ProdServer,
+  resolveConfig,
+  Server,
+  StringBuilder,
+  Watcher,
+  WsServer
+} from "@naxt/runtime";
+import type { NaxtConfig, Parser } from "@naxt/types";
 import { ModuleGraph } from "./moduleGraph";
-import { DevServer, ProdServer, Server } from "@naxt/runtime";
 
 export class Naxt {
   constructor(private naxtConfig: NaxtConfig) {
     config.setConfig("port", naxtConfig.port || 3000);
-    config.setConfig("isDev", naxtConfig.isDev || false);
+    config.setConfig("isDev", naxtConfig.isDev || true);
+    config.setConfig("isProd", naxtConfig.isProd || false);
 
     config.setConfig("appRoot", Path.from(process.cwd()));
     config.setConfig("license", new StringBuilder());
@@ -24,14 +34,14 @@ export class Naxt {
     config.setConfig("isBuild", true);
     let { parser: parserModule } = config.getConfig("appConfig");
     parserModule === "rollup" && (parserModule = "@naxt/parser-rollup");
-    const pages = getPages({ path: true, absolute: true });
     const { bundle } = (await import(require.resolve(parserModule))) as Parser;
-    await bundle(pages);
+    await bundle();
   }
 
-  async serve(options?: ServeOptions) {
+  async serve() {
     config.setConfig("appConfig", await resolveConfig());
-    const { isProd = false } = options || {};
+    const isProd = config.getConfig("isProd");
+
     const server = new Server();
     const runtimeServer = isProd ? new ProdServer(server) : new DevServer(server);
     await runtimeServer.handle();
