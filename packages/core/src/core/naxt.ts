@@ -44,6 +44,12 @@ export class Naxt {
 
     const server = new Server();
     const runtimeServer = isProd ? new ProdServer(server) : new DevServer(server);
+    const wsServer = new WsServer(server);
+    const appRoot = config.getConfig("appRoot");
+    const watcher = new Watcher();
+
+    wsServer.emit("start", "welcome");
+
     await runtimeServer.handle();
     server.start();
   }
