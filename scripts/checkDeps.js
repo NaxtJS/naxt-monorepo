@@ -28,7 +28,7 @@ process.stdin.on(
       const { missing } = JSON.parse(matchedData);
       const dependencies = Object.keys(missing);
       const pkgName = repo.slice(repo.startsWith("@") ? 1 : 0).replace(/\W+/g, "-");
-      const missingDepFile = resolve(process.cwd(), "missingRepos", `${pkgName}.json`);
+      const missingDepFile = resolve(process.cwd(), `missingPkgs/${pkgName}.json`);
 
       try {
         unlinkSync(missingDepFile);
