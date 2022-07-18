@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Naxt.iml" filepath="$PROJECT_DIR$/.idea/Naxt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Vite-Example-App/.idea/Vite-Example-App.iml" filepath="$PROJECT_DIR$/../Vite-Example-App/.idea/Vite-Example-App.iml" />
     </modules>
   </component>
 </project>
